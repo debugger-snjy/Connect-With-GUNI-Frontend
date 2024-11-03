@@ -1,0 +1,116 @@
+.myLoginLink{
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centerIt {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logoImg {
+  margin-top: 10px;
+}
+
+.inputField {
+  font-size: 23px;
+  color: black;
+  margin-top: 25px;
+  font-weight: 700;
+}
+
+/* .inputField::placeholder {
+  color: rgb(80, 80, 80);
+} */
+
+.loginBtn {
+  font-size: 23px;
+  color: white;
+  margin-top: 25px;
+  font-weight: 500;
+  background-color: rgb(28, 109, 0);
+  outline: none;
+  border: 2px solid green;
+}
+
+.loginBtn:focus,
+.loginBtn:focus-within,
+.loginBtn:focus-visible {
+  outline: none;
+}
+
+.loginBtn:hover {
+  box-shadow: 2px 2px 2px rgb(28, 109, 0);
+  font-weight: 700;
+  outline: none;
+  border: 2px solid green;
+  background-color: rgb(28, 109, 0);
+}
+
+/* For Desktop View */
+@media screen and (min-width: 1024px) {
+  .logoImg {
+    color: #fff;
+    width: 50%;
+  }
+  .loginForm,
+  .loginBtn {
+    margin-top: 100px;
+    width: 50%;
+  }
+  .loginBtn {
+    margin-top: 50px;
+  }
+}
+
+/* For Tablet View */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .logoImg {
+    width: 50%;
+    color: black;
+  }
+  .loginForm,
+  .loginBtn {
+    margin-top: 75px;
+    width: 60%;
+  }
+}
+
+@media screen and (min-device-width: 640px) and (max-device-width: 768px) {
+  .logoImg {
+    width: 80%;
+    color: black;
+  }
+  .loginForm,
+  .loginBtn {
+    margin-top: 50px;
+    width: 70%;
+  }
+}
+
+@media screen and (min-device-width: 480px) and (max-device-width: 640px) {
+  .logoImg {
+    width: 80%;
+    color: black;
+  }
+  .loginForm,
+  .loginBtn {
+    margin-top: 50px;
+    width: 80%;
+  }
+}
+
+@media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .logoImg {
+    width: 80%;
+    color: black;
+  }
+  .loginForm,
+  .loginBtn {
+    margin-top: 50px;
+    width: 90%;
+  }
+}

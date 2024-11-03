@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* CSS for Remainders Components */
+
+.noteAccordionItem {
+  background-color: #1e1e1e;
+  color: white;
+  border: 2px solid whitesmoke;
+}
+
+.noteAccordionHeaders {
+  background-color: #1e1e1e;
+  color: white;
+  border: 2px solid whitesmoke;
+}
+
+.noteAccordion-Button:not(.collapsed) {
+  background-color: white;
+  color: black;
+}
+
+.noteAccordion-Button.collapsed {
+  background-color: black;
+  color: white;
+}
+
+.facultyAccordion-Button:not(.collapsed){
+  background-color: black;
+  color : white;
+  font-weight: 700;
+}
+.facultyAccordion-Button.collapsed{
+  background-color: black;
+  color : white;
+  font-weight: 700;
+}
+
+.noteTitleText {
+  font-size: xx-large;
+  color: white;
+}
+
+.websiteHeading {
+  text-align: center;
+  font-weight: bolder;
+  color: rgb(55, 44, 44);
+  margin-top: 50px;
+}
+
+.websitetext {
+  font-weight: 600;
+  color: black;
+  font-size: 19px;
+  text-align: justify;
+  line-height: 1.6;
+}
+
+.noteCard {
+  margin: 10px 0px;
+  border: 2px solid black;
+  box-shadow: 0px 5px 0px 0px black;
+  transform: scale(1.025);
+}
+
+.icons {
+  cursor: pointer;
+}
+
+#root {
+  margin-bottom: 100px;
+}
+
+.noteField-signup,
+.noteField-note {
+  border: 2px solid black;
+  box-shadow: 0px 5px 0px 0px black;
+}
+
+.noteField-signup:focus,
+.noteField-note:focus {
+  border: 2px solid black;
+  box-shadow: 0px 5px 0px 0px black;
+}
+
+.noteField-login {
+  border: 2px solid white;
+  box-shadow: 0px 5px 0px 0px #72a3eb;
+}
+
+.noteField-login:focus {
+  border: 2px solid white;
+  box-shadow: 0px 5px 0px 0px #72a3eb;
+}
+
+.addNoteBtn {
+  box-shadow: 0px 5px 0px 0px black;
+  width: 40%;
+  height: 50px;
+  opacity: 1;
+}
+
+.signupBtn {
+  height: 50px;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.textData {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+.tags {
+  background-color: orange;
+  border-radius: 10px;
+}
+
+.noteTitle {
+  word-wrap: anywhere;
+}
