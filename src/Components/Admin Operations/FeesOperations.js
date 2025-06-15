@@ -70,7 +70,7 @@ function FeesOperations() {
         }
         else {
             // Calling the Add Fees API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/upload/fees`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/fees/upload`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -91,10 +91,10 @@ function FeesOperations() {
 
             console.log(addFeesResponse)
 
-            if (addFeesResponse.status === "success") {
+            if (addFeesResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("addFeesCloseBtn").click()
-                contextData.showAlert("Success", addFeesResponse.msg, "alert-success")
+                contextData.showAlert("Success", addFeesResponse.message, "alert-success")
                 addFeesForm.reset();
 
                 // Moving the Page to the Top
@@ -104,7 +104,7 @@ function FeesOperations() {
                 FetchFeesAPI()
             }
             else {
-                contextData.showAlert("Failed", addFeesResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addFeesResponse.message, "alert-danger")
             }
         }
     }
@@ -112,7 +112,7 @@ function FeesOperations() {
     // Function to Fetch the Fees Data in the Database
     const FetchFeesAPI = async () => {
         // Calling the Add Fees API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allfees`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/fees/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -124,13 +124,21 @@ function FeesOperations() {
 
         console.log(fetchFeesResponse)
 
-        setFeesRecords(fetchFeesResponse.fees)
+        if (fetchFeesResponse.success) {
+            // If the response is successful, set the FeesRecords state
+            setFeesRecords(fetchFeesResponse.data);
+            setFilteredRecords([]) // Reset filtered records when fetching new data
+        }
+        else {
+            // If the response is not successful, show an alert
+            contextData.showAlert("Failed", fetchFeesResponse.message, "alert-danger")
+        }
     }
 
     // Function to Delete the Fees Data : 
     const DeleteFeesAPI = async (feesId) => {
         // Calling the Add Fees API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/fees/${feesId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/fees/delete/${feesId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -142,8 +150,14 @@ function FeesOperations() {
 
         console.log(deleteFeesResponse)
 
-        // Showing the Alert Message that Fees Deleted
-        contextData.showAlert("Success", deleteFeesResponse.msg, "alert-success")
+        if (deleteFeesResponse.success) {
+            // If the response is successful, show an alert
+            contextData.showAlert("Success", deleteFeesResponse.message, "alert-success")
+        }
+        else {
+            // If the response is not successful, show an alert
+            contextData.showAlert("Failed", deleteFeesResponse.message, "alert-danger")
+        }
 
         // Moving the Page to the Top
         contextData.moveToTop()
@@ -177,7 +191,7 @@ function FeesOperations() {
         }
         else {
             // Calling the Edit Fees API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/update/fees/${feesId}`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/fees/update/${feesId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -197,9 +211,9 @@ function FeesOperations() {
 
             console.log(editFeesResponse)
 
-            if (editFeesResponse.status === "success") {
+            if (editFeesResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", editFeesResponse.msg, "alert-success")
+                contextData.showAlert("Success", editFeesResponse.message, "alert-success")
                 editFeesForm.reset();
                 document.getElementById("editFeescloseBtn").click()
 
@@ -210,7 +224,7 @@ function FeesOperations() {
                 FetchFeesAPI()
             }
             else {
-                contextData.showAlert("Failed", editFeesResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", editFeesResponse.message, "alert-danger")
             }
         }
 

@@ -22,7 +22,7 @@ function Fees() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/${userrole}/fetch/fees/sem/${user.sem}/enroll/${user.enrollNo}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/fees/fetch/sem/${user.sem}/enroll/${user.enrollNo}`, {
             method: "GET",
 
             headers: {
@@ -36,13 +36,13 @@ function Fees() {
         console.log(feesData)
 
         // Sending the response Data
-        return feesData
+        return feesData.data
     }
 
     useEffect(() => {
         getFeesReceipts().then((data) => {
-            console.log(data.studentFees)
-            setuserFeesReceipts(data.studentFees)
+            console.log(data)
+            setuserFeesReceipts(data)
             contextData.updateRecentlyAccessed('Fees Recipts', `${location.pathname}`);
         })
     }, [])

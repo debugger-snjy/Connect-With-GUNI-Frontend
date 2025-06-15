@@ -47,7 +47,7 @@ function AttendanceOperations() {
     // Function to Fetch the Attendance Data in the Database
     const FetchAttendanceAPI = async () => {
         // Calling the Add Attendance API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/attendance/fetch`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/attendance/fetch`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +59,9 @@ function AttendanceOperations() {
 
         console.log(fetchAttendanceResponse)
 
-        setAttendanceRecords(fetchAttendanceResponse.attendance)
+        if (fetchAttendanceResponse.success) {
+            setAttendanceRecords(fetchAttendanceResponse.data)
+        }
     }
 
     // Function to Add the Attendance Data in the Database
@@ -89,7 +91,7 @@ function AttendanceOperations() {
             data.append("file", submittedFile)
 
             // Calling the Add Attendance API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/attendance/upload`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/attendance/upload`, {
                 method: "POST",
                 body: data
             });
@@ -99,9 +101,9 @@ function AttendanceOperations() {
 
             console.log(addAttendanceResponse)
 
-            if (addAttendanceResponse.status === "success") {
+            if (addAttendanceResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", addAttendanceResponse.msg, "alert-success")
+                contextData.showAlert("Success", addAttendanceResponse.message, "alert-success")
                 addAttendanceForm.reset();
                 document.getElementById("AddAttendanceFormCloseBtn").click()
 
@@ -112,7 +114,7 @@ function AttendanceOperations() {
                 FetchAttendanceAPI()
             }
             else {
-                contextData.showAlert("Failed", addAttendanceResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addAttendanceResponse.message, "alert-danger")
                 // Moving the Page to the Top
                 contextData.moveToTop()
             }

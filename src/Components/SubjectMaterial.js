@@ -27,24 +27,26 @@ function SubjectMaterial() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/material/${subjectname}`, {
-            method: "POST",
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/material/fetch/subject/${subjectname}`, {
+            method: "GET",
 
             headers: {
                 "Content-Type": "application/json",
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
 
-            body: JSON.stringify({ "sem": userSem })
+            //body: JSON.stringify({ "sem": userSem })
         });
 
         // Variable to handle the API Response and get the results
         const allSubjectMaterialData = await response.json()
         console.log(allSubjectMaterialData)
-        console.log(allSubjectMaterialData.subjectMaterial)
+        console.log(allSubjectMaterialData.data)
 
-        // Setting the data variable with the values we have
-        setMaterials(allSubjectMaterialData.subjectMaterial)
+        if (allSubjectMaterialData.success) {
+            // Setting the data variable with the values we have
+            setMaterials(allSubjectMaterialData.data)
+        }
 
         // Sending the response Data ---> No need to return the data
         // return allSubjectMaterialData

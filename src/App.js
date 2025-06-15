@@ -36,8 +36,7 @@ import Marksheets from './Components/Marksheets';
 
 function App() {
     let location = useLocation();
-    // console.log("Getting Location Pathname : ", location.pathname);
-
+    
     const userrole = sessionStorage.getItem("role")
 
     return (

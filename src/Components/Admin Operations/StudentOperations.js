@@ -73,7 +73,7 @@ function StudentOperations() {
         }
         else {
             // Calling the Add Student API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/add/student`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/student/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,10 +97,10 @@ function StudentOperations() {
 
             console.log(addStudentResponse)
 
-            if (addStudentResponse.status === "success") {
+            if (addStudentResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("addStudentCloseBtn").click()
-                contextData.showAlert("Success", addStudentResponse.msg, "alert-success")
+                contextData.showAlert("Success", addStudentResponse.message, "alert-success")
                 addStudentForm.reset();
 
                 contextData.moveToTop()
@@ -109,7 +109,7 @@ function StudentOperations() {
                 FetchStudentAPI()
             }
             else {
-                contextData.showAlert("Failed", addStudentResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addStudentResponse.message, "alert-danger")
             }
         }
     }
@@ -117,7 +117,7 @@ function StudentOperations() {
     // Function to Fetch the Student Data in the Database
     const FetchStudentAPI = async () => {
         // Calling the Add Student API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allstudents`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/student/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -129,13 +129,15 @@ function StudentOperations() {
 
         console.log(fetchStudentResponse)
 
-        setStudentRecords(fetchStudentResponse.students)
+        if (fetchStudentResponse.success) {
+            setStudentRecords(fetchStudentResponse.data)
+        }
     }
 
     // Function to Delete the Student Data : 
     const DeleteStudentAPI = async (studentId) => {
         // Calling the Add Student API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/student/${studentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/student/delete/${studentId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -147,8 +149,12 @@ function StudentOperations() {
 
         console.log(deleteStudentResponse)
 
-        // Showing the Alert Message that Student Deleted
-        contextData.showAlert("Success", deleteStudentResponse.msg, "alert-success")
+        if (deleteStudentResponse.success) {
+            contextData.showAlert("Success", deleteStudentResponse.message, "alert-success")
+        }
+        else {
+            contextData.showAlert("Failed", deleteStudentResponse.message, "alert-danger")
+        }
 
         // Again Fetching the Records to refresh the records
         FetchStudentAPI()
@@ -180,7 +186,7 @@ function StudentOperations() {
         }
         else {
             // Calling the Edit Student API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/update/student/${studentId}`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/student/update/${studentId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -203,9 +209,9 @@ function StudentOperations() {
 
             console.log(editStudentResponse)
 
-            if (editStudentResponse.status === "success") {
+            if (editStudentResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", editStudentResponse.msg, "alert-success")
+                contextData.showAlert("Success", editStudentResponse.message, "alert-success")
                 editStudentForm.reset();
                 document.getElementById("editStudentcloseBtn").click()
 
@@ -213,7 +219,7 @@ function StudentOperations() {
                 FetchStudentAPI()
             }
             else {
-                contextData.showAlert("Failed", editStudentResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", editStudentResponse.message, "alert-danger")
             }
         }
 
@@ -304,7 +310,7 @@ function StudentOperations() {
             if (searchBatch !== "") {
                 batchMatches = item.batch.includes(searchBatch);
             }
-            if(searchName !== ""){
+            if (searchName !== "") {
                 nameMatches = item.name.includes(searchName)
             }
 

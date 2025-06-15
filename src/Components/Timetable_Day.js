@@ -66,7 +66,7 @@ function Timetable_Day(props) {
         const userDivision = JSON.parse(sessionStorage.getItem("user")).division
 
         // Calling the Add Student API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/timetable`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/timetable/fetch`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -79,8 +79,8 @@ function Timetable_Day(props) {
 
         console.log(fetchTimteableResponse)
 
-        if (fetchTimteableResponse.timetable.length > 0) {
-            setDayTimetableRecord(fetchTimteableResponse.timetable[0].data[today.toString()])
+        if (fetchTimteableResponse.data.length > 0) {
+            setDayTimetableRecord(fetchTimteableResponse.data[0].data[today.toString()])
         }
 
     }

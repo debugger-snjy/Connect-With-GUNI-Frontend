@@ -103,7 +103,7 @@ function MarksheetOperations() {
             console.log("Add Marksheet Data : ", formData)
 
             // Calling the Add Marksheet API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/upload/marksheet`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/marksheet/upload`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -116,18 +116,18 @@ function MarksheetOperations() {
 
             console.log(addMarksheetResponse)
 
-            if (addMarksheetResponse.status === "success") {
+            if (addMarksheetResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("addMarksheetcloseBtn").click()
                 document.getElementById("addMarksheetModel").style.display = "none"
-                contextData.showAlert("Success", addMarksheetResponse.msg, "alert-success")
+                contextData.showAlert("Success", addMarksheetResponse.message, "alert-success")
                 addMarksheetForm.reset();
 
                 // Fetching the Records Again for the Updated Records
                 FetchMarksheetAPI()
             }
             else {
-                contextData.showAlert("Failed", addMarksheetResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addMarksheetResponse.message, "alert-danger")
             }
         }
 
@@ -136,7 +136,7 @@ function MarksheetOperations() {
     // Function to Fetch the Marksheet Data in the Database
     const FetchMarksheetAPI = async () => {
         // Calling the Add Marksheet API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allmarksheet`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/marksheet/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -148,13 +148,24 @@ function MarksheetOperations() {
 
         console.log(fetchMarksheetResponse)
 
-        setMarksheetRecords(fetchMarksheetResponse.marksheet)
+        if (fetchMarksheetResponse.success) {
+            // Setting the Marksheet Records
+            setMarksheetRecords(fetchMarksheetResponse.data)
+            setFilteredRecords([]) // Resetting the filtered records
+
+            // Showing the Alert Message that Marksheet Fetched
+            contextData.showAlert("Success", fetchMarksheetResponse.message, "alert-success")
+        }
+        else {
+            // Showing the Alert Message that Marksheet Fetched
+            contextData.showAlert("Failed", fetchMarksheetResponse.message, "alert-danger")
+        }
     }
 
     // Function to Delete the Marksheet Data : 
     const DeleteMarksheetAPI = async (marksheetId) => {
         // Calling the Add Marksheet API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/marksheet/${marksheetId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/marksheet/delete/${marksheetId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -166,8 +177,14 @@ function MarksheetOperations() {
 
         console.log(deleteMarksheetResponse)
 
-        // Showing the Alert Message that Marksheet Deleted
-        contextData.showAlert("Success", deleteMarksheetResponse.msg, "alert-success")
+        if (deleteMarksheetResponse.success) {
+            // Showing the Alert Message that Marksheet Deleted
+            contextData.showAlert("Success", deleteMarksheetResponse.message, "alert-success")
+        }
+        else {
+            // Showing the Alert Message that Marksheet Deleted
+            contextData.showAlert("Failed", deleteMarksheetResponse.message, "alert-danger")
+        }
 
         // Moving the Page to the Top
         contextData.moveToTop()
@@ -227,7 +244,7 @@ function MarksheetOperations() {
             console.log("Edit Marksheet Data : ", editFormData)
 
             // Calling the Add Marksheet API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/update/marksheet/${marksheetId}`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/marksheet/update/${marksheetId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -240,18 +257,18 @@ function MarksheetOperations() {
 
             console.log(editMarksheetResponse)
 
-            if (editMarksheetResponse.status === "success") {
+            if (editMarksheetResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("editMarksheetcloseBtn").click()
                 document.getElementById("editMarksheetModel").style.display = "none"
-                contextData.showAlert("Success", editMarksheetResponse.msg, "alert-success")
+                contextData.showAlert("Success", editMarksheetResponse.message, "alert-success")
                 editMarksheetForm.reset();
 
                 // Fetching the Records Again for the Updated Records
                 FetchMarksheetAPI()
             }
             else {
-                contextData.showAlert("Failed", editMarksheetResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", editMarksheetResponse.message, "alert-danger")
             }
         }
 

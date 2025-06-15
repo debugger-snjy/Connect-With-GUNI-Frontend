@@ -86,7 +86,7 @@ function AdminOperations() {
         }
         else {
             // Calling the Add Admin API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/add/admin`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -106,17 +106,17 @@ function AdminOperations() {
 
             console.log(addAdminResponse)
 
-            if (addAdminResponse.status === "success") {
+            if (addAdminResponse.success) {
                 // After a successful submission, hide the modal
                 // document.getElementById("addAdmincloseBtn").click()
                 // document.getElementById("addAdminModel").style.display = "none"
-                // contextData.showAlert("Success", addAdminResponse.msg, "alert-success")
+                // contextData.showAlert("Success", addAdminResponse.message, "alert-success")
                 // addAdminForm.reset();
 
                 // After a successful submission, hide the modal
                 document.getElementById("addAdminCloseBtn").click()
                 document.getElementById("addAdminModel").style.display = "none"
-                contextData.showAlert("Success", addAdminResponse.msg, "alert-success")
+                contextData.showAlert("Success", addAdminResponse.message, "alert-success")
                 addAdminForm.reset();
 
 
@@ -127,7 +127,7 @@ function AdminOperations() {
                 FetchAdminAPI()
             }
             else {
-                contextData.showAlert("Failed", addAdminResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addAdminResponse.message, "alert-danger")
             }
         }
     }
@@ -135,7 +135,7 @@ function AdminOperations() {
     // Function to Fetch the Admin Data in the Database
     const FetchAdminAPI = async () => {
         // Calling the Add Admin API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/alladmin`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -147,13 +147,15 @@ function AdminOperations() {
 
         console.log(fetchAdminResponse)
 
-        setAdminRecords(fetchAdminResponse.admins)
+        if (fetchAdminResponse.success) {
+            setAdminRecords(fetchAdminResponse.data)
+        }
     }
 
     // Function to Delete the Admin Data : 
     const DeleteAdminAPI = async (adminId) => {
         // Calling the Add Admin API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/admin/${adminId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/delete/${adminId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -165,8 +167,13 @@ function AdminOperations() {
 
         console.log(deleteAdminResponse)
 
-        // Showing the Alert Message that Admin Deleted
-        contextData.showAlert("Success", deleteAdminResponse.msg, "alert-success")
+        if (deleteAdminResponse.success) {
+            // Showing the Alert Message that Admin Deleted
+            contextData.showAlert("Success", deleteAdminResponse.message, "alert-success");
+        }
+        else {
+            contextData.showAlert("Failed", deleteAdminResponse.message, "alert-danger");
+        }
 
         // Moving the Page to the Top
         contextData.moveToTop()
@@ -207,7 +214,7 @@ function AdminOperations() {
         }
         else {
             // Calling the Add Admin API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/update/admin/${adminId}`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/update/${adminId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -227,9 +234,9 @@ function AdminOperations() {
 
             console.log(editAdminResponse)
 
-            if (editAdminResponse.status === "success") {
+            if (editAdminResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", editAdminResponse.msg, "alert-success")
+                contextData.showAlert("Success", editAdminResponse.message, "alert-success")
                 document.getElementById("editAdminModel").style.display = "none"
                 editAdminForm.reset();
                 document.getElementById("editAdmincloseBtn").click()
@@ -241,7 +248,7 @@ function AdminOperations() {
                 FetchAdminAPI()
             }
             else {
-                contextData.showAlert("Failed", editAdminResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", editAdminResponse.message, "alert-danger")
             }
         }
 

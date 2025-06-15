@@ -48,6 +48,7 @@ function FacultyDashboard() {
     // Function to move the user to remainders page
     const openRemainders = () => {
         console.log("This is a Remainders Pages")
+        console.log(sessionStorage.getItem("role"))
         navigateTo(`${location.pathname}/remainders`)
     }
 
@@ -111,7 +112,7 @@ function FacultyDashboard() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/announcement/sem/${userSem}/div/${userDiv}/batch/${userBatch}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/fetch/sem/${userSem}/div/${userDiv}/batch/${userBatch}`, {
             method: "GET", // As fetchallnotes is a GET method
 
             headers: {
@@ -125,8 +126,15 @@ function FacultyDashboard() {
 
         console.log(announcementResponse)
 
-        // Setting the Data in the Variable
-        setAnnouncements(announcementResponse.announcements)
+        if (announcementResponse.success) {
+            // If the response is successful then set the notes
+            setAnnouncements(announcementResponse.data);
+        }
+        else {
+            // If the response is not successful then show the error
+            contextData.showAlert("Failed", "Error Fetching the Announcements", "alert-danger")
+        }
+
     }
 
     return (

@@ -113,7 +113,7 @@ function StudentDashboard() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/announcement/sem/${userSem}/div/${userDiv}/batch/${userBatch}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/fetch/sem/${userSem}/div/${userDiv}/batch/${userBatch}`, {
             method: "GET", // As fetchallnotes is a GET method
 
             headers: {
@@ -127,8 +127,14 @@ function StudentDashboard() {
 
         console.log(announcementResponse)
 
-        // Setting the Data in the Variable
-        setAnnouncements(announcementResponse.announcements)
+        if (announcementResponse.success) {
+            // Setting the Data in the Variable
+            setAnnouncements(announcementResponse.data)
+        }
+        else {
+            // Showing the Alert Box
+            contextData.showAlert("Failed", "Error Fetching the Announcements", "alert-danger")
+        }
     }
 
     return (

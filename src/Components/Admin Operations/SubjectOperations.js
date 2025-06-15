@@ -70,7 +70,7 @@ function SubjectOperations() {
         }
         else {
             // Calling the Add Subject API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/add/subject`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/subject/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -89,10 +89,10 @@ function SubjectOperations() {
 
             console.log(addSubjectResponse)
 
-            if (addSubjectResponse.status === "success") {
+            if (addSubjectResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("addSubjectCloseBtn").click()
-                contextData.showAlert("Success", addSubjectResponse.msg, "alert-success")
+                contextData.showAlert("Success", addSubjectResponse.message, "alert-success")
                 addSubjectForm.reset();
 
                 // Moving the Page to the Top
@@ -102,7 +102,7 @@ function SubjectOperations() {
                 FetchSubjectAPI()
             }
             else {
-                contextData.showAlert("Failed", addSubjectResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addSubjectResponse.message, "alert-danger")
             }
         }
     }
@@ -110,7 +110,7 @@ function SubjectOperations() {
     // Function to Fetch the Subject Data in the Database
     const FetchSubjectAPI = async () => {
         // Calling the Add Subject API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allsubjects`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/subject/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -122,13 +122,21 @@ function SubjectOperations() {
 
         console.log(fetchSubjectResponse)
 
-        setSubjectRecords(fetchSubjectResponse.subjects)
+        if (fetchSubjectResponse.success) {
+            // If the response is successful, set the SubjectRecords state
+            setSubjectRecords(fetchSubjectResponse.subjects);
+            setFilteredRecords([]); // Reset filtered records when fetching new data
+        }
+        else {
+            // If the response is not successful, show an alert
+            contextData.showAlert("Failed", fetchSubjectResponse.message, "alert-danger")
+        }
     }
 
     // Function to Delete the Subject Data : 
     const DeleteSubjectAPI = async (subjectId) => {
         // Calling the Add Subject API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/subject/${subjectId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/subject/delete/${subjectId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -140,8 +148,14 @@ function SubjectOperations() {
 
         console.log(deleteSubjectResponse)
 
-        // Showing the Alert Message that Subject Deleted
-        contextData.showAlert("Success", deleteSubjectResponse.msg, "alert-success")
+        if (deleteSubjectResponse.success) {
+            // If the response is successful, show an alert
+            contextData.showAlert("Success", deleteSubjectResponse.message, "alert-success")
+        }
+        else {
+            // If the response is not successful, show an alert
+            contextData.showAlert("Failed", deleteSubjectResponse.message, "alert-danger")
+        }
 
         // Moving the Page to the Top
         contextData.moveToTop()
@@ -173,7 +187,7 @@ function SubjectOperations() {
         }
         else {
             // Calling the Edit Subject API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/update/subject/${subjectId}`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/subject/update/${subjectId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -192,9 +206,9 @@ function SubjectOperations() {
 
             console.log(editSubjectResponse)
 
-            if (editSubjectResponse.status === "success") {
+            if (editSubjectResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", editSubjectResponse.msg, "alert-success")
+                contextData.showAlert("Success", editSubjectResponse.message, "alert-success")
                 editSubjectForm.reset();
                 document.getElementById("editSubjectcloseBtn").click()
 
@@ -205,7 +219,7 @@ function SubjectOperations() {
                 FetchSubjectAPI()
             }
             else {
-                contextData.showAlert("Failed", editSubjectResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", editSubjectResponse.message, "alert-danger")
             }
         }
 

@@ -58,7 +58,7 @@ function TimetableOperations() {
     // Function to Fetch the Timetable Data in the Database
     const FetchTimetableAPI = async () => {
         // Calling the Add Timetable API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/alltimetables`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/timetable/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -70,7 +70,14 @@ function TimetableOperations() {
 
         console.log(fetchTimetableResponse)
 
-        setTimetableRecords(fetchTimetableResponse.timetable)
+        if (fetchTimetableResponse.success) {
+            // If the response is successful then set the records
+            setTimetableRecords(fetchTimetableResponse.data)
+        }
+        else {
+            // If the response is not successful then show the alert
+            contextData.showAlert("Failed", fetchTimetableResponse.message, "alert-danger")
+        }
     }
 
     // Function to Add the Timetable Data in the Database
@@ -100,7 +107,7 @@ function TimetableOperations() {
         }
         else {
             // Calling the Add Timetable API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/upload/timetable`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/timetable/upload`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -118,18 +125,18 @@ function TimetableOperations() {
 
             console.log(addTimetableResponse)
 
-            if (addTimetableResponse.status === "success") {
+            if (addTimetableResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("addTimetableCloseBtn").click()
                 document.getElementById("addTimetableModel").style.display = "none"
-                contextData.showAlert("Success", addTimetableResponse.msg, "alert-success")
+                contextData.showAlert("Success", addTimetableResponse.message, "alert-success")
                 addTimetableForm.reset();
 
                 // Fetching the Records Again for the Updated Records
                 FetchTimetableAPI()
             }
             else {
-                contextData.showAlert("Failed", addTimetableResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addTimetableResponse.message, "alert-danger")
             }
         }
     }
@@ -137,7 +144,7 @@ function TimetableOperations() {
     // Function to Delete the Timetable Data in the Database
     const DeleteTimetableAPI = async (timetableId) => {
         // Calling the Add Timetable API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/timetable/${timetableId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/timetable/delete/${timetableId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -149,8 +156,14 @@ function TimetableOperations() {
 
         console.log(deleteTimetableResponse)
 
-        // Showing the Alert Message that Timetable Deleted
-        contextData.showAlert("Success", deleteTimetableResponse.msg, "alert-success")
+        if (deleteTimetableResponse.success) {
+            // Showing the Alert Message that Timetable Deleted
+            contextData.showAlert("Success", deleteTimetableResponse.message, "alert-success")
+        }
+        else {
+            // Showing the Alert Message that Timetable Deleted
+            contextData.showAlert("Failed", deleteTimetableResponse.message, "alert-danger")
+        }
 
         // Again Fetching the Records to refresh the records
         FetchTimetableAPI()
@@ -158,7 +171,7 @@ function TimetableOperations() {
 
     const EditTimetableAPI = async () => {
         // Calling the Add Timetable API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/edit/timetable/${editTimetableData._id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/timetable/edit/${editTimetableData._id}`, {
             method: "PUT",
             body: JSON.stringify({ "allData": editTimetableData }),
             headers: {
@@ -171,8 +184,14 @@ function TimetableOperations() {
 
         console.log(editTimetableResponse)
 
-        // Showing the Alert Message that Timetable Deleted
-        contextData.showAlert("Success", editTimetableResponse.msg, "alert-success")
+        if (editTimetableResponse.success) {
+            // Showing the Alert Message that Timetable Deleted
+            contextData.showAlert("Success", editTimetableResponse.message, "alert-success")
+        }
+        else {
+            // Showing the Alert Message that Timetable Deleted
+            contextData.showAlert("Failed", editTimetableResponse.message, "alert-danger")
+        }
 
         // Again Fetching the Records to refresh the records
         FetchTimetableAPI()

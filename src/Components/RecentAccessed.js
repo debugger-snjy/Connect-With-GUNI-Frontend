@@ -12,7 +12,7 @@ function RecentAccessed() {
     const FetchRecentAccessedAPI = async () => {
 
         // Adding the API Call to add the notes into the Database
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/recentaccessed/fetch`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/recentaccess/fetch`, {
             method: "POST", // As fetchallnotes is a GET method
 
             headers: {
@@ -33,8 +33,8 @@ function RecentAccessed() {
             setRecentlyAccessed([])
         }
         else {
-            console.log(allRecentAccessed.recentAccessed[0].recentData)
-            setRecentlyAccessed(allRecentAccessed.recentAccessed[0].recentData.reverse())
+            console.log(allRecentAccessed.data[0].recentData)
+            setRecentlyAccessed(allRecentAccessed.data[0].recentData.reverse())
         }
     }
 

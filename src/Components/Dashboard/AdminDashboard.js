@@ -141,7 +141,7 @@ function AdminDashboard() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/announcement/sem/${userSem}/div/${userDiv}/batch/${userBatch}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/fetch/sem/${userSem}/div/${userDiv}/batch/${userBatch}`, {
             method: "GET", // As fetchallnotes is a GET method
 
             headers: {
@@ -155,8 +155,14 @@ function AdminDashboard() {
 
         console.log(announcementResponse)
 
-        // Setting the Data in the Variable
-        setAnnouncements(announcementResponse.announcements)
+        if (announcementResponse.success) {
+            // If the response is successful then set the notes in the state
+            setAnnouncements(announcementResponse.data);
+        }
+        else {
+            // If the response is not successful then show the error message
+            contextData.showAlert("Failed", "Error Fetching the Announcements", "alert-danger")
+        }
     }
 
     return (

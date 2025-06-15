@@ -18,8 +18,8 @@ export default function AddNote() {
 
     // Changing the Page when user clicks logout button
     useEffect(() => {
-        console.log(localStorage.getItem("token"));
-        if (!localStorage.getItem("token")) {
+        console.log(sessionStorage.getItem("token"));
+        if (!sessionStorage.getItem("token")) {
             navigateTo("/")
         }
     }, [])
@@ -52,11 +52,11 @@ export default function AddNote() {
         })
 
         // Showing the Alert Message
-        if (responseData.status === "success") {
-            contextData.showAlert("Success", responseData.msg, "alert-success")
+        if (responseData.success) {
+            contextData.showAlert("Success", responseData.message, "alert-success")
         }
         else {
-            contextData.showAlert("Error", responseData.msg, "alert-danger")
+            contextData.showAlert("Error", responseData.message, "alert-danger")
         }
     }
 

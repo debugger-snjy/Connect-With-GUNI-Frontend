@@ -77,7 +77,7 @@ function MaterialOperations() {
             data.append("file", submittedFile,)
 
             // Calling the Add Material API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/materials/upload`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/material/upload`, {
                 method: "POST",
                 body: data
             });
@@ -87,9 +87,9 @@ function MaterialOperations() {
 
             console.log(addMaterialResponse)
 
-            if (addMaterialResponse.status === "success") {
+            if (addMaterialResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", addMaterialResponse.msg, "alert-success")
+                contextData.showAlert("Success", addMaterialResponse.message, "alert-success")
                 addMaterialForm.reset();
                 document.getElementById("AddMaterialFormCloseBtn").click()
 
@@ -100,7 +100,7 @@ function MaterialOperations() {
                 FetchMaterialAPI()
             }
             else {
-                contextData.showAlert("Failed", addMaterialResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addMaterialResponse.message, "alert-danger")
             }
         }
     }
@@ -108,7 +108,7 @@ function MaterialOperations() {
     // Function to Fetch the Material Data in the Database
     const FetchMaterialAPI = async () => {
         // Calling the Add Material API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allmaterials`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/material/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -120,13 +120,21 @@ function MaterialOperations() {
 
         console.log(fetchMaterialResponse)
 
-        setMaterialRecords(fetchMaterialResponse.materials)
+        if (fetchMaterialResponse.success) {
+            // If the response is successful, set the Material Records
+            setMaterialRecords(fetchMaterialResponse.data)
+            setFilteredRecords([]) // Reset filtered records when fetching new data
+        }
+        else {
+            // If the response is not successful, show an alert
+            contextData.showAlert("Failed", fetchMaterialResponse.message, "alert-danger")
+        }
     }
 
     // Function to Delete the Material Data : 
     const DeleteMaterialAPI = async (materialId) => {
         // Calling the Delete Material API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/material/${materialId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/material/delete//${materialId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -138,9 +146,15 @@ function MaterialOperations() {
 
         console.log(deleteMaterialResponse)
 
-        // Showing the Alert Message that Material Deleted
-        contextData.showAlert("Success", deleteMaterialResponse.msg, "alert-success")
-
+        if (deleteMaterialResponse.success) {
+            // If the response is successful, show an alert and refresh the records
+            contextData.showAlert("Success", deleteMaterialResponse.message, "alert-success")
+        }
+        else {
+            // If the response is not successful, show an alert
+            contextData.showAlert("Failed", deleteMaterialResponse.message, "alert-danger")
+        }
+        
         // Moving the Page to the Top
         contextData.moveToTop()
 

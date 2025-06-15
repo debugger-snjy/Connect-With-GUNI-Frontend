@@ -56,7 +56,7 @@ function Marksheets() {
         let user = JSON.parse(sessionStorage.getItem("user"))
 
         // Calling the Add Marksheet API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/marksheet/sem/${user.sem}/enroll/${user.enrollNo}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/marksheet/fetch/sem/${user.sem}/enroll/${user.enrollNo}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -68,7 +68,15 @@ function Marksheets() {
 
         console.log(fetchAllStudentMarksheets)
 
-        setMarksheetRecords(fetchAllStudentMarksheets.studentMarksheet)
+        if (fetchAllStudentMarksheets.success) {
+            // If the API call is successful then set the Marksheet Records
+            setMarksheetRecords(fetchAllStudentMarksheets.data)
+            contextData.showAlert("Success", "Fetched All Marksheets Successfully", "alert-success")
+        }
+        else {
+            // If the API call is not successful then show the error
+            contextData.showAlert("Failed", "Error Fetching Marksheets", "alert-danger")
+        }
     }
 
     function formatDate(marksheetDate) {

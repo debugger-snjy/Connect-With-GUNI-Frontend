@@ -45,7 +45,7 @@ function ViewProfile() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/auth/getuser`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getuser`, {
             method: "POST",
 
             headers: {
@@ -59,10 +59,10 @@ function ViewProfile() {
 
         console.log(userDataResponse)
 
-        setuserData(userDataResponse.user)
+        setuserData(userDataResponse.data.user)
 
         // Sending the response Data
-        return userDataResponse.user
+        return userDataResponse.data.user
     }
 
     return (

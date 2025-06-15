@@ -54,7 +54,15 @@ function MaterialItem(props) {
                     <h5 className="card-title text-black fw-bold">{props.title}</h5>
                 </div>
                 <div className="card-footer">
-                    <button className="btn btn-dark w-100" onClick={() => { contextData.downloadFile(props.filelink, props.title) }}>Download File</button>
+                    {/* <a href={props.filelink} download={props.title} className="btn btn-dark w-100">Download File</a> */}
+                    {/* <button className="btn btn-dark w-100" onClick={() => { contextData.downloadFile(props.filelink, props.title,props.type) }}>Download File</button> */}
+                    {/* {console.log(props.title)} */}
+                    <a
+                        className="btn btn-dark w-100"
+                        href={`${process.env.REACT_APP_BACKEND_URL}/download?url=${encodeURIComponent(props.filelink)}&name=${encodeURIComponent(`${props.title}`)}`}
+                    >
+                        Download File
+                    </a>
                 </div>
             </div>
         </div>

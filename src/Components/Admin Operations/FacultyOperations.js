@@ -74,7 +74,7 @@ function FacultyOperations() {
         }
         else {
             // Calling the Add Faculty API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/add/faculty`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/faculty/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -99,18 +99,18 @@ function FacultyOperations() {
 
             console.log(addFacultyResponse)
 
-            if (addFacultyResponse.status === "success") {
+            if (addFacultyResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("addFacultyCloseBtn").click()
                 document.getElementById("addFacultyModel").style.display = "none"
-                contextData.showAlert("Success", addFacultyResponse.msg, "alert-success")
+                contextData.showAlert("Success", addFacultyResponse.message, "alert-success")
                 addFacultyForm.reset();
 
                 // Fetching the Records Again for the Updated Records
                 FetchFacultyAPI()
             }
             else {
-                contextData.showAlert("Failed", addFacultyResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addFacultyResponse.message, "alert-danger")
             }
         }
     }
@@ -118,7 +118,7 @@ function FacultyOperations() {
     // Function to Fetch the Faculty Data in the Database
     const FetchFacultyAPI = async () => {
         // Calling the Add Faculty API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allfaculties`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/faculty/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -130,13 +130,21 @@ function FacultyOperations() {
 
         console.log(fetchFacultiesResponse)
 
-        setFacultyRecords(fetchFacultiesResponse.faculties)
+        if (fetchFacultiesResponse.success) {
+            // If the response is successful, then set the Faculty Records
+            setFacultyRecords(fetchFacultiesResponse.data)
+            setFilteredRecords([]) // Resetting the filtered records
+        }
+        else {
+            // If the response is not successful, then show the alert
+            contextData.showAlert("Failed", fetchFacultiesResponse.message, "alert-danger")
+        }
     }
 
     // Function to Delete the Faculty Data : 
     const DeleteFacultyAPI = async (facultyId) => {
         // Calling the Add Faculty API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/faculty/${facultyId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/faculty/delete/${facultyId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -148,8 +156,14 @@ function FacultyOperations() {
 
         console.log(deleteFacultyResponse)
 
-        // Showing the Alert Message that Faculty Deleted
-        contextData.showAlert("Success", deleteFacultyResponse.msg, "alert-success")
+        if (deleteFacultyResponse.success) {
+            // If the response is successful, then show the alert
+            contextData.showAlert("Success", deleteFacultyResponse.message, "alert-success")
+        }
+        else {
+            // If the response is not successful, then show the alert
+            contextData.showAlert("Failed", deleteFacultyResponse.message, "alert-danger")
+        }
 
         // Again Fetching the Records to refresh the records
         FetchFacultyAPI()
@@ -184,7 +198,7 @@ function FacultyOperations() {
         }
         else {
             // Calling the Edit Faculty API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/update/faculty/${facultyId}`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/faculty/update/${facultyId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -207,9 +221,9 @@ function FacultyOperations() {
             // Variable to handle the API Response
             const editFacultyResponse = await response.json()
 
-            if (editFacultyResponse.status === "success") {
+            if (editFacultyResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", editFacultyResponse.msg, "alert-success")
+                contextData.showAlert("Success", editFacultyResponse.message, "alert-success")
                 editFacultyForm.reset();
                 document.getElementById("editFacultycloseBtn").click()
 
@@ -217,7 +231,7 @@ function FacultyOperations() {
                 FetchFacultyAPI()
             }
             else {
-                contextData.showAlert("Failed", editFacultyResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", editFacultyResponse.message, "alert-danger")
             }
         }
     }

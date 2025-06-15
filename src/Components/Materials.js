@@ -13,7 +13,7 @@ function Materials() {
     const contextData = useContext(NoteContext);
     let location = useLocation()
 
-    const [data, setData] = useState({ msg: "", status: "", semesterSubjects: [] });
+    const [data, setData] = useState([]);
     const userSem = JSON.parse(sessionStorage.getItem("user")).sem
 
     // Function to call the Fetch All Subject API for the user semester !
@@ -21,7 +21,7 @@ function Materials() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allsemsubjects/${userSem}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/subject/fetch/sem/${userSem}`, {
             method: "GET",
 
             headers: {
@@ -33,8 +33,10 @@ function Materials() {
         const allSubjectData = await response.json()
         console.log(allSubjectData)
 
-        // Setting the data variable with the values we have
-        setData(allSubjectData)
+        if (allSubjectData.success) {
+            // Setting the data variable with the values we have
+            setData(allSubjectData.data)
+        }
 
         // Sending the response Data ---> No need to return the data
         // return allSubjectData
@@ -47,7 +49,7 @@ function Materials() {
 
         contextData.updateRecentlyAccessed('Materials', `${location.pathname}`);
 
-        console.log(data.semesterSubjects)
+        console.log(data.data)
     }, []); // The empty dependency array means this effect runs once, similar to componentDidMount
 
 
@@ -66,7 +68,7 @@ function Materials() {
             <div className="row subjects mb-5 mt-4 text-white">
                 <div className="container">
                     <div className="row gy-4 px-2">
-                        {data.semesterSubjects.map((subject) => {
+                        {data.map((subject) => {
                             return (
                                 <SubjectItem key={subject._id} subjectId={subject._id} image={subjectBg} name={subject.subjectName} shortform={subject.subjectShortForm} faculties={subject.faculties} />
                             );

@@ -4,9 +4,6 @@ import axios from "axios";
 
 const NoteState = (props) => {
 
-    // Adding the url of the host
-    const host = "http://localhost:5000";
-
     // Getting the NOTES from the DATABASE :
     const mynotes = [];
 
@@ -41,7 +38,7 @@ const NoteState = (props) => {
         // ✅ Done TODO : Make an API Call Here !
 
         // Adding the API Call to add the notes into the Database
-        const response = await fetch(`${host}/api/${sessionStorage.getItem("role")}/notes/addnote`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/add`, {
             method: "POST", // As fetchallnotes is a GET method
 
             headers: {
@@ -62,7 +59,7 @@ const NoteState = (props) => {
 
         // Now, adding all the notes in the userNotes state variable and will display all the notes from database !
         // This change is because we have added the msg and status field in the note response
-        setuserNotes(userNotes.concat(addNoteResponse.savedNote))
+        setuserNotes(userNotes.concat(addNoteResponse.data))
 
         console.log(userNotes);
 
@@ -100,7 +97,7 @@ const NoteState = (props) => {
         console.log(tags);
         // console.log(JSON.stringify({title,description,tags}))
 
-        const response = await fetch(`${host}/api/${sessionStorage.getItem("role")}/notes/updatenote/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/update/${id}`, {
             method: "PUT", // As editnote is a PUT method
 
             headers: {
@@ -155,7 +152,7 @@ const NoteState = (props) => {
 
         // ✅ Done TODO : Make an API Call Here !
         // Adding the API Call to delete the notes from the database
-        const response = await fetch(`${host}/api/${sessionStorage.getItem("role")}/notes/deletenote/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/delete/${id}`, {
             method: "DELETE", // As deleteNote is a DELETE method
 
             headers: {
@@ -177,10 +174,10 @@ const NoteState = (props) => {
         console.log(deletedNote["status"]);
 
         // Showing the Alert Message
-        if (deletedNote.status === "success")
-            showAlert("Success", deletedNote.msg, "alert-success")
+        if (deletedNote.success)
+            showAlert("Success", deletedNote.message, "alert-success")
         else
-            showAlert("Error", deletedNote.msg, "alert-danger")
+            showAlert("Error", deletedNote.message, "alert-danger")
 
         // let usersWithoutTim = userNotes.filter(user => user.name !== "Tim");
         // Using the filter function and using that we will not allow the note to be included
@@ -200,7 +197,7 @@ const NoteState = (props) => {
         showAlert("Info", "Fetching Your Notes", "alert-info")
 
         // Adding the API Call to fetch all the notes
-        const response = await fetch(`${host}/api/${sessionStorage.getItem("role")}/notes/fetchallnotes`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/fetch/all`, {
             method: "GET", // As fetchallnotes is a GET method
 
             headers: {
@@ -220,7 +217,7 @@ const NoteState = (props) => {
         // console.log(allNotesFromDb);
 
         // Now, adding all the notes in the userNotes state variable and will display all the notes from database !
-        setuserNotes(allNotesFromDb)
+        setuserNotes(allNotesFromDb.data)
 
         showAlert("Success", "Notes Fetched Successfully !", "alert-info")
     }
@@ -237,7 +234,7 @@ const NoteState = (props) => {
         console.log(sessionStorage.getItem("token"));
 
         // Adding the API Call to fetch all the notes
-        const response = await fetch(`${host}/api/auth/getuser`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getuser`, {
             method: "POST", // As fetchUser is a POST method
 
             headers: {
@@ -258,10 +255,10 @@ const NoteState = (props) => {
         // console.log(userInfo.user.date)
 
         // Sending the Formatted Date Time !
-        userInfo.user.date = formattedDateTime(userInfo.user.date)
-        // console.log(userInfo.user.date)
+        userInfo.data.user.date = formattedDateTime(userInfo.data.user.date)
+        // console.log(userInfo.data.user.date)
 
-        setUser(userInfo.user)
+        setUser(userInfo.data.user)
 
         showAlert("Success", "User Fetched Successfully !", "alert-info")
     }
@@ -281,7 +278,7 @@ const NoteState = (props) => {
         // Getting the min from the time string
         let dateMins = datetime.getMinutes()
 
-        const months = ["Jan", "Feb", "Mar", "Apr", "MayJun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
         // Finding the am pm notation from the string
         let ampm = "";
@@ -314,7 +311,7 @@ const NoteState = (props) => {
         const noteDate = addZero(datetime.getDate()) + " " + addZero(months[datetime.getMonth() - 1]) + " " + datetime.getFullYear()
 
         // Checking
-        // console.log(noteDate,noteTime);
+        // console.log(noteDate, noteTime, datetime.getMonth(), months[datetime.getMonth() - 1]);
 
         // Returning the Date and Time in a form of String
         return `${noteDate} ${noteTime}`;
@@ -332,7 +329,7 @@ const NoteState = (props) => {
     const AddRecentAccessedAPI = async (description, link, timestamp) => {
 
         // Adding the API Call to add the notes into the Database
-        const response = await fetch(`${host}/api/${sessionStorage.getItem("role")}/recentaccessed/add`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/recentaccess/add`, {
             method: "POST", // As fetchallnotes is a GET method
 
             headers: {
@@ -350,7 +347,7 @@ const NoteState = (props) => {
         const addRecentAccessed = await response.json();
 
         // Checking
-        if (addRecentAccessed.status !== "success") {
+        if (!addRecentAccessed.success) {
             showAlert("Error", "Updating Recent Accessed List", "alert-danger")
         }
 
@@ -370,27 +367,29 @@ const NoteState = (props) => {
     };
 
     // Function to Download the File or Material !
-    const downloadFile = async (filepath, filename) => {
+    const downloadFile = async (fileurl, filename, filetype) => {
 
         console.log("Download Process 1")
         try {
-            const response = await axios.get(`${host}/api/download`, {
-                responseType: 'blob', // Important for handling binary data
-                params: {
-                    filepath: filepath,
-                    // Add more parameters as needed
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/download`, {
+                headers: {
+                    "Content-Type": "application/json"
                 },
+
+                body: JSON.stringify({ fileurl, filename, filetype })
             });
 
+            // console.log(filename);
+
             // Create a link element and initiate the download
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+            // const url = window.URL.createObjectURL(new Blob([response.data]));
+            // const a = document.createElement('a');
+            // a.href = filepath;
+            // a.download = filename;
+            // document.body.appendChild(a);
+            // a.click();
+            // document.body.removeChild(a);
+            //window.URL.revokeObjectURL(url);
 
         }
         catch (error) {

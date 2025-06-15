@@ -24,7 +24,7 @@ function Login() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/auth/getuser`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getuser`, {
             method: "POST",
 
             headers: {
@@ -47,7 +47,7 @@ function Login() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/auth/login`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
             method: "POST", // As fetchallnotes is a GET method
 
             headers: {
@@ -85,15 +85,17 @@ function Login() {
         // Adding the API Call to add the notes into the Database
         const response = await loginAPI(useremail, userpassword, userrole)
 
+        console.log(response);
+
         // If the user is registered and we get its auth-token,
         // Then we will save that auth-token in the sessionStorage
-        if (response.status === "success") {
+        if (response.success) {
 
             // Showing the Alert Message
-            contextData.showAlert("Success", response.msg, "alert-success")
+            contextData.showAlert("Success", response.message, "alert-success")
 
             // Getting the User Info :
-            const getuserResponse = await getInfoAPI(response.authToken)
+            const getuserResponse = await getInfoAPI(response.data.authToken)
 
             console.log("Hii", getuserResponse)
 
@@ -103,12 +105,12 @@ function Login() {
             setTimeout(() => {
 
                 // Saving auth-token in sessionStorage
-                sessionStorage.setItem("token", response.authToken)
+                sessionStorage.setItem("token", response.data.authToken)
                 sessionStorage.setItem("role", userrole)
-                sessionStorage.setItem("user", JSON.stringify(getuserResponse.user))
+                sessionStorage.setItem("user", JSON.stringify(getuserResponse.data.user))
 
                 // Showing the Alert Box for the successfull fetching the user data
-                contextData.showAlert("Success", getuserResponse.msg, "alert-success")
+                contextData.showAlert("Success", getuserResponse.message, "alert-success")
 
                 navigateTo(`/dashboard/${userrole}`)
 
@@ -119,10 +121,10 @@ function Login() {
         else {
 
             // Showing the Alert Message
-            contextData.showAlert("Failed", response.msg, "alert-danger")
+            contextData.showAlert("Failed", response.message, "alert-danger")
 
             // // Setting the status message :
-            // document.getElementById("status").innerText = userToken.msg
+            // document.getElementById("status").innerText = userToken.message
             // document.getElementById("status").style.color = "red"
             // document.getElementById("status").style.fontWeight = 600;
         }

@@ -82,7 +82,7 @@ function AnnouncementOperations() {
         }
         else {
             // Calling the Add Announcement API
-            const response = await fetch(`http://localhost:5000/api/${role}/upload/announcement/`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/upload`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -103,18 +103,18 @@ function AnnouncementOperations() {
 
             console.log(addAnnouncementResponse)
 
-            if (addAnnouncementResponse.status === "success") {
+            if (addAnnouncementResponse.success) {
                 // After a successful submission, hide the modal
                 document.getElementById("addAnnouncementCloseBtn").click()
                 document.getElementById("addAnnouncementModel").style.display = "none"
-                contextData.showAlert("Success", addAnnouncementResponse.msg, "alert-success")
+                contextData.showAlert("Success", addAnnouncementResponse.message, "alert-success")
                 addAnnouncementForm.reset();
 
                 // Fetching the Records Again for the Updated Records
                 FetchAnnouncementAPI()
             }
             else {
-                contextData.showAlert("Failed", addAnnouncementResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", addAnnouncementResponse.message, "alert-danger")
             }
         }
     }
@@ -122,7 +122,7 @@ function AnnouncementOperations() {
     // Function to Fetch the Announcement Data in the Database
     const FetchAnnouncementAPI = async () => {
         // Calling the Add Announcement API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/fetch/allannouncement`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/fetch/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -134,13 +134,15 @@ function AnnouncementOperations() {
 
         console.log(fetchAnnouncementsResponse)
 
-        setAnnouncementRecords(fetchAnnouncementsResponse.announcements)
+        if (fetchAnnouncementsResponse.success) {
+            setAnnouncementRecords(fetchAnnouncementsResponse.data)
+        }
     }
 
     // Function to Delete the Announcement Data : 
     const DeleteAnnouncementAPI = async (announcementId) => {
         // Calling the Add Announcement API
-        const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/delete/announcement/${announcementId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/delete/${announcementId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -152,8 +154,13 @@ function AnnouncementOperations() {
 
         console.log(deleteAnnouncementResponse)
 
-        // Showing the Alert Message that Announcement Deleted
-        contextData.showAlert("Success", deleteAnnouncementResponse.msg, "alert-success")
+        if (deleteAnnouncementResponse.success) {
+            // After a successful submission, hide the modal
+            contextData.showAlert("Success", deleteAnnouncementResponse.message, "alert-success")
+        }
+        else {
+            contextData.showAlert("Failed", deleteAnnouncementResponse.message, "alert-danger")
+        }
 
         // Again Fetching the Records to refresh the records
         FetchAnnouncementAPI()
@@ -209,7 +216,7 @@ function AnnouncementOperations() {
         }
         else {
             // Calling the Add Announcement API
-            const response = await fetch(`http://localhost:5000/api/${sessionStorage.getItem("role")}/update/announcement/${announcementId}`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/update/${announcementId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -228,9 +235,9 @@ function AnnouncementOperations() {
             // Variable to handle the API Response
             const editAnnouncementResponse = await response.json()
 
-            if (editAnnouncementResponse.status === "success") {
+            if (editAnnouncementResponse.success) {
                 // After a successful submission, hide the modal
-                contextData.showAlert("Success", editAnnouncementResponse.msg, "alert-success")
+                contextData.showAlert("Success", editAnnouncementResponse.message, "alert-success")
                 editAnnouncementForm.reset();
                 document.getElementById("editAnnouncementcloseBtn").click()
 
@@ -238,7 +245,7 @@ function AnnouncementOperations() {
                 FetchAnnouncementAPI()
             }
             else {
-                contextData.showAlert("Failed", editAnnouncementResponse.msg, "alert-danger")
+                contextData.showAlert("Failed", editAnnouncementResponse.message, "alert-danger")
             }
         }
     }

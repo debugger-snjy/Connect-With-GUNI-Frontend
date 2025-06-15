@@ -23,7 +23,7 @@ function FacultyDetails() {
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
-        const response = await fetch(`http://localhost:5000/api/${userrole}/fetch/allfaculties`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/faculty/fetch/all`, {
             method: "GET",
 
             headers: {
@@ -37,13 +37,13 @@ function FacultyDetails() {
         console.log(facultyData)
 
         // Sending the response Data
-        return facultyData
+        return facultyData.data
     }
 
     useEffect(() => {
         getFacultiesInfo().then((data) => {
-            console.log(data.faculties)
-            setuserFaculty(data.faculties)
+            console.log(data)
+            setuserFaculty(data)
             contextData.updateRecentlyAccessed('Faculty Info', `${location.pathname}`);
         })
     }, [])
