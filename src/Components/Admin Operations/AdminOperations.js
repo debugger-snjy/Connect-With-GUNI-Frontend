@@ -10,6 +10,9 @@ import deleteAdminImg from "../../Images/admin_delete_icon.png"
 import fetchAdminImg from "../../Images/admin_fetch_icon.png"
 import updateAdminImg from "../../Images/admin_update_icon.png"
 
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
+
 function AdminOperations() {
     // Used to navigate things
     let navigateTo = useNavigate()
@@ -63,22 +66,22 @@ function AdminOperations() {
 
         // Access form fields by their Ids
         const username = document.getElementById("username").value
-        // console.log(username)
+        // Logger(username)
 
         const useremail = document.getElementById("useremail").value
-        // console.log(useremail)
+        // Logger(useremail)
 
         const userpassword = document.getElementById("userpassword").value
-        // console.log(userpassword)
+        // Logger(userpassword)
 
         const usergender = document.getElementById("genderMale").checked ? "male" : document.getElementById("genderFemale").checked ? "female" : "";
-        // console.log(usergender)
+        // Logger(usergender)
 
         const userphone = document.getElementById("userphone").value
-        // console.log(userphone)
+        // Logger(userphone)
 
         const userrole = sessionStorage.getItem("role")
-        // console.log(userrole)
+        // Logger(userrole)
 
 
         if (username == "" || useremail == "" || userpassword == "" || usergender == "" || userphone == "") {
@@ -104,7 +107,7 @@ function AdminOperations() {
             // Variable to handle the API Response
             const addAdminResponse = await response.json()
 
-            console.log(addAdminResponse)
+            Logger(addAdminResponse)
 
             if (addAdminResponse.success) {
                 // After a successful submission, hide the modal
@@ -145,7 +148,7 @@ function AdminOperations() {
         // Variable to handle the API Response
         const fetchAdminResponse = await response.json()
 
-        console.log(fetchAdminResponse)
+        Logger(fetchAdminResponse)
 
         if (fetchAdminResponse.success) {
             setAdminRecords(fetchAdminResponse.data)
@@ -165,7 +168,7 @@ function AdminOperations() {
         // Variable to handle the API Response
         const deleteAdminResponse = await response.json()
 
-        console.log(deleteAdminResponse)
+        Logger(deleteAdminResponse)
 
         if (deleteAdminResponse.success) {
             // Showing the Alert Message that Admin Deleted
@@ -192,22 +195,22 @@ function AdminOperations() {
 
         // Access form fields by their Ids
         const updatedusername = document.getElementById("updatedusername").value
-        // console.log(updatedusername)
+        // Logger(updatedusername)
 
         const updateduseremail = document.getElementById("updateduseremail").value
-        // console.log(updateduseremail)
+        // Logger(updateduseremail)
 
         const updateduserpassword = document.getElementById("updateduserpassword").value
-        // console.log(updateduserpassword)
+        // Logger(updateduserpassword)
 
         const updatedusergender = document.getElementById("updatedgenderMale").checked ? "male" : document.getElementById("updatedgenderFemale").checked ? "female" : "";
-        // console.log(updatedusergender)
+        // Logger(updatedusergender)
 
         const updateduserphone = document.getElementById("updateduserphone").value
-        // console.log(updateduserphone)
+        // Logger(updateduserphone)
 
         const updateduserrole = sessionStorage.getItem("role")
-        // console.log(updateduserrole)
+        // Logger(updateduserrole)
 
         if (updatedusername == "" || updateduseremail == "" || updateduserpassword == "" || updatedusergender == "" || updateduserphone == "") {
             contextData.showAlert("Failed", "Some Fields are Empty !", "alert-danger")
@@ -232,7 +235,7 @@ function AdminOperations() {
             // Variable to handle the API Response
             const editAdminResponse = await response.json()
 
-            console.log(editAdminResponse)
+            Logger(editAdminResponse)
 
             if (editAdminResponse.success) {
                 // After a successful submission, hide the modal
@@ -264,7 +267,7 @@ function AdminOperations() {
             // Thus, when we write the title, then value of title will be the text that user will write
         })
 
-        console.log("EditAdmin : ", EditAdminRecord)
+        Logger("EditAdmin : ", EditAdminRecord)
 
     }
 
@@ -334,7 +337,7 @@ function AdminOperations() {
                             FilteredRecords.length === 0 && AdminRecords.map((admin, index) => {
 
                                 const keys = Object.keys(admin);
-                                {/* console.log(admin) */ }
+                                {/* Logger(admin) */ }
 
                                 return (
 
@@ -368,7 +371,7 @@ function AdminOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", admin[data]) */ }
+                                                                        {/* Logger(data, " --> ", admin[data]) */ }
                                                                         if (data === "_id" || data === "__v") { }
                                                                         else {
                                                                             return (
@@ -398,7 +401,7 @@ function AdminOperations() {
                             FilteredRecords.length !== 0 && FilteredRecords.map((admin, index) => {
 
                                 const keys = Object.keys(admin);
-                                {/* console.log(admin) */ }
+                                {/* Logger(admin) */ }
 
                                 return (
 
@@ -432,7 +435,7 @@ function AdminOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", admin[data]) */ }
+                                                                        {/* Logger(data, " --> ", admin[data]) */ }
                                                                         if (data === "_id" || data === "__v") { }
                                                                         else {
                                                                             return (

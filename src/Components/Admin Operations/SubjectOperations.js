@@ -4,6 +4,8 @@ import NoteContext from '../../Context/NoteContext';
 import InternalMenuBar from '../InternalMenuBar';
 import NavBreadcrumb from '../NavBreadcrumb';
 import subjectImg from "../../Images/subject03.png"
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function SubjectOperations() {
 
@@ -87,7 +89,7 @@ function SubjectOperations() {
             // Variable to handle the API Response
             const addSubjectResponse = await response.json()
 
-            console.log(addSubjectResponse)
+            Logger(addSubjectResponse)
 
             if (addSubjectResponse.success) {
                 // After a successful submission, hide the modal
@@ -120,7 +122,7 @@ function SubjectOperations() {
         // Variable to handle the API Response
         const fetchSubjectResponse = await response.json()
 
-        console.log(fetchSubjectResponse)
+        Logger(fetchSubjectResponse)
 
         if (fetchSubjectResponse.success) {
             // If the response is successful, set the SubjectRecords state
@@ -146,7 +148,7 @@ function SubjectOperations() {
         // Variable to handle the API Response
         const deleteSubjectResponse = await response.json()
 
-        console.log(deleteSubjectResponse)
+        Logger(deleteSubjectResponse)
 
         if (deleteSubjectResponse.success) {
             // If the response is successful, show an alert
@@ -171,7 +173,7 @@ function SubjectOperations() {
         const editSubjectForm = document.getElementById("EditSubjectForm")
 
         // event.preventDefault(); // Prevent the form from submitting
-        console.log(EditSubjectRecord)
+        Logger(EditSubjectRecord)
 
         // Access form fields by their Ids
         const updatesubjectsem = document.getElementById("updatesubjectsem").value;
@@ -180,7 +182,7 @@ function SubjectOperations() {
         const updatesubjectCode = document.getElementById("updatesubjectCode").value;
         const updatesubjectFaculties = document.getElementById("updatesubjectFaculties").value;
 
-        // console.log(updateduserrole)
+        // Logger(updateduserrole)
 
         if (updatesubjectsem == "" || updatesubjectName == "" || updatesubjectShortForm == "" || updatesubjectCode == "" || updatesubjectFaculties == "") {
             contextData.showAlert("Failed", "Some Fields are Empty !", "alert-danger")
@@ -204,7 +206,7 @@ function SubjectOperations() {
             // Variable to handle the API Response
             const editSubjectResponse = await response.json()
 
-            console.log(editSubjectResponse)
+            Logger(editSubjectResponse)
 
             if (editSubjectResponse.success) {
                 // After a successful submission, hide the modal
@@ -235,7 +237,7 @@ function SubjectOperations() {
             // Thus, when we write the title, then value of title will be the text that user will write
         })
 
-        console.log("EditSubject : ", EditSubjectRecord)
+        Logger("EditSubject : ", EditSubjectRecord)
 
     }
 
@@ -341,7 +343,7 @@ function SubjectOperations() {
                             FilteredRecords.length === 0 && SubjectRecords.map((subject, index) => {
 
                                 const keys = Object.keys(subject);
-                                {/* console.log(subject) */ }
+                                {/* Logger(subject) */ }
 
                                 return (
 
@@ -376,9 +378,9 @@ function SubjectOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        console.log(data, " --> ", subject[data])
+                                                                        Logger(data, " --> ", subject[data])
                                                                         if (data.toLowerCase() === "faculties") {
-                                                                            console.log(subject[data])
+                                                                            Logger(subject[data])
                                                                         }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "subjectlectures") { }
                                                                         else {
@@ -408,7 +410,7 @@ function SubjectOperations() {
                             FilteredRecords.length !== 0 && FilteredRecords.map((subject, index) => {
 
                                 const keys = Object.keys(subject);
-                                {/* console.log(subject) */ }
+                                {/* Logger(subject) */ }
 
                                 return (
 
@@ -443,9 +445,9 @@ function SubjectOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        console.log(data, " --> ", subject[data])
+                                                                        Logger(data, " --> ", subject[data])
                                                                         if (data.toLowerCase() === "faculties") {
-                                                                            console.log(subject[data])
+                                                                            Logger(subject[data])
                                                                         }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "subjectlectures") { }
                                                                         else {

@@ -11,6 +11,8 @@ import downloadIcon from "../../Images/downloadIcon.png"
 import axios from 'axios'
 import NoteContext from '../../Context/NoteContext';
 
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function MaterialItem(props) {
 
@@ -56,7 +58,7 @@ function MaterialItem(props) {
                 <div className="card-footer">
                     {/* <a href={props.filelink} download={props.title} className="btn btn-dark w-100">Download File</a> */}
                     {/* <button className="btn btn-dark w-100" onClick={() => { contextData.downloadFile(props.filelink, props.title,props.type) }}>Download File</button> */}
-                    {/* {console.log(props.title)} */}
+                    {/* {Logger(props.title)} */}
                     <a
                         className="btn btn-dark w-100"
                         href={`${process.env.REACT_APP_BACKEND_URL}/download?url=${encodeURIComponent(props.filelink)}&name=${encodeURIComponent(`${props.title}`)}`}

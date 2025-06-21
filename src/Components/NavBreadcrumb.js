@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function NavBreadcrumb() {
 
     let location = useLocation();
@@ -27,7 +30,7 @@ function NavBreadcrumb() {
         if (!isUpperCase(name)) {
             name = name[0].toUpperCase() + name.slice(1).toLowerCase()
         }
-        // console.log(name)
+        // Logger(name)
 
         if (path.endsWith("dashboard")) {
             path = `${path}/${userrole}`

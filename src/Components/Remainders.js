@@ -6,13 +6,16 @@ import InternalMenuBar from './InternalMenuBar';
 import AddNote from './AddNote';
 import NoteItem from './NoteItem';
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function Remainders() {
 
     let location = useLocation()
 
     // Using the function to get the data from the context
     const contextData = useContext(NoteContext);
-    // console.log(contextData);
+    // Logger(contextData);
 
     // Destructuring Data
     // Removing updateNotes ==> as we have only to display notes right now
@@ -26,13 +29,13 @@ function Remainders() {
     // Calling the fetchAllNotes() :
     useEffect(() => {
 
-        console.log(sessionStorage.getItem("token"));
+        Logger(sessionStorage.getItem("token"));
         if (sessionStorage.getItem("token")) {
             fetchAllNotes()
 
             contextData.updateRecentlyAccessed('Remainders', `${location.pathname}`);
 
-            console.log("Fetching");
+            Logger("Fetching");
         }
         else {
             contextData.updateRecentlyAccessed('Remainders - Error Page', `${location.pathname}`);
@@ -52,7 +55,7 @@ function Remainders() {
         // This will prevent the page to get Reloaded (it is preventDefault not preventDefaults !)
         event.preventDefault();
 
-        console.log("Edited Note : ", editedNote)
+        Logger("Edited Note : ", editedNote)
 
         // Calling the function editNote from NoteState and update the data in the database as well using API
         const responseData = await editNote(editedNote.id, editedNote.editTitle, editedNote.editDescription, editedNote.editTags)
@@ -84,7 +87,7 @@ function Remainders() {
     }
 
     const updatenote = (currentNote) => {
-        console.log("Updating Note !!", currentNote);
+        Logger("Updating Note !!", currentNote);
 
         setEditedNote({
             id: currentNote._id,
@@ -167,7 +170,7 @@ function Remainders() {
                                         {/* Displaying the data individual from the Array */}
                                         {userNotes.map((note) => {
                                             {/*Adding the NoteItem Component Here & will pass the note data as props */ }
-                                            {/* console.log(note._id) /// Checking */ }
+                                            {/* Logger(note._id) /// Checking */ }
                                             return (
                                                 <NoteItem note={note} key={note._id} updatenote={updatenote} />
                                             );

@@ -2,8 +2,11 @@ import React from 'react'
 import AnnouncementIcon from "../../Images/announcementIcon01.png"
 import filelinkIcon from "../../Images/filelink.png"
 
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
+
 function AnnouncementItem(props) {
-    console.log("Links : ", props.links)
+    Logger("Links : ", props.links)
 
     let keyLinks = (!props.links) ? null : Object.keys(props.links);
     let keys = []

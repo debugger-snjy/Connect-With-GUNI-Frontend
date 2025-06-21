@@ -13,6 +13,8 @@ import InternalMenuBar from '../InternalMenuBar'
 import NavBreadcrumb from '../NavBreadcrumb'
 import AnnouncementItem from '../Items/AnnouncementItem'
 
+import Logger from '../../Utils/Logger'
+
 function StudentDashboard() {
 
     // Used to navigate things
@@ -36,25 +38,25 @@ function StudentDashboard() {
 
     // Function to move the user to materials page
     const openMaterials = () => {
-        console.log("This is a material Pages")
+        Logger("This is a material Pages")
         navigateTo(`${location.pathname}/materials`)
     }
 
     // Function to move the user to Attendance page
     const openAttendance = () => {
-        console.log("This is a Attendance Pages")
+        Logger("This is a Attendance Pages")
         navigateTo(`${location.pathname}/attendance`)
     }
 
     // Function to move the user to remainders page
     const openRemainders = () => {
-        console.log("This is a Remainders Pages")
+        Logger("This is a Remainders Pages")
         navigateTo(`${location.pathname}/remainders`)
     }
 
     // Function to move the user to faculty info page
     const openFacultyInfo = () => {
-        console.log("This is a Faculty Info Pages")
+        Logger("This is a Faculty Info Pages")
         navigateTo(`${location.pathname}/facultyinfo`)
     }
 
@@ -65,13 +67,13 @@ function StudentDashboard() {
         let days = ["sunday", "monday", "tuesday", "wednesday", "thrusday", "friday", "saturday"];
         let index = today.getUTCDay()
 
-        console.log("This is a Faculty Info Pages ", index)
+        Logger("This is a Faculty Info Pages ", index)
         navigateTo(`${location.pathname}/timetable/${days[index]}`)
     }
 
     // Function to move the user to Recent Accessed page
     const openRecentAccessed = () => {
-        console.log("This is a material Pages")
+        Logger("This is a material Pages")
         navigateTo(`${location.pathname}/recently_accessed`)
     }
 
@@ -125,7 +127,7 @@ function StudentDashboard() {
         // Variable to handle the API Response
         const announcementResponse = await response.json()
 
-        console.log(announcementResponse)
+        Logger(announcementResponse)
 
         if (announcementResponse.success) {
             // Setting the Data in the Variable
@@ -220,7 +222,7 @@ function StudentDashboard() {
                     {
                         announcements.map((announcement) => {
 
-                            console.log(announcement)
+                            Logger(announcement)
 
                             return (
                                 <div key={announcement._id}>

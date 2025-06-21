@@ -5,6 +5,8 @@ import InternalMenuBar from '../InternalMenuBar';
 import NavBreadcrumb from '../NavBreadcrumb';
 import facultyMaleImg from "../../Images/male_faculty.png"
 import facultyFemaleImg from "../../Images/female_faculty.png"
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function FacultyOperations() {
 
@@ -97,7 +99,7 @@ function FacultyOperations() {
             // Variable to handle the API Response
             const addFacultyResponse = await response.json()
 
-            console.log(addFacultyResponse)
+            Logger(addFacultyResponse)
 
             if (addFacultyResponse.success) {
                 // After a successful submission, hide the modal
@@ -128,7 +130,7 @@ function FacultyOperations() {
         // Variable to handle the API Response
         const fetchFacultiesResponse = await response.json()
 
-        console.log(fetchFacultiesResponse)
+        Logger(fetchFacultiesResponse)
 
         if (fetchFacultiesResponse.success) {
             // If the response is successful, then set the Faculty Records
@@ -154,7 +156,7 @@ function FacultyOperations() {
         // Variable to handle the API Response
         const deleteFacultyResponse = await response.json()
 
-        console.log(deleteFacultyResponse)
+        Logger(deleteFacultyResponse)
 
         if (deleteFacultyResponse.success) {
             // If the response is successful, then show the alert
@@ -175,7 +177,7 @@ function FacultyOperations() {
 
         const editFacultyForm = document.getElementById("EditFacultyForm")
 
-        console.log(EditFacultyRecord)
+        Logger(EditFacultyRecord)
 
         // event.preventDefault(); // Prevent the form from submitting
 
@@ -246,7 +248,7 @@ function FacultyOperations() {
             // Thus, when we write the title, then value of title will be the text that user will write
         })
 
-        console.log("EditAdmin : ", EditFacultyRecord)
+        Logger("EditAdmin : ", EditFacultyRecord)
 
     }
 
@@ -363,7 +365,7 @@ function FacultyOperations() {
                             FilteredRecords.length === 0 && FacultyRecords.map((faculty, index) => {
 
                                 const keys = Object.keys(faculty);
-                                console.log(faculty)
+                                Logger(faculty)
 
                                 return (
 
@@ -398,7 +400,7 @@ function FacultyOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", faculty[data]) */ }
+                                                                        {/* Logger(data, " --> ", faculty[data]) */ }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData") { }
                                                                         else {
                                                                             return (
@@ -428,7 +430,7 @@ function FacultyOperations() {
                             FilteredRecords.length !== 0 && FilteredRecords.map((faculty, index) => {
 
                                 const keys = Object.keys(faculty);
-                                console.log(faculty)
+                                Logger(faculty)
 
                                 return (
 
@@ -463,7 +465,7 @@ function FacultyOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", faculty[data]) */ }
+                                                                        {/* Logger(data, " --> ", faculty[data]) */ }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData") { }
                                                                         else {
                                                                             return (

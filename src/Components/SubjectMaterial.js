@@ -7,6 +7,9 @@ import axios from 'axios';
 import MaterialItem from './Items/MaterialItem';
 import NavBreadcrumb from './NavBreadcrumb';
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function SubjectMaterial() {
 
     // Access the subjectname from the URL params
@@ -23,7 +26,7 @@ function SubjectMaterial() {
     const fetchAllSubjectMaterials = async () => {
 
         const userSem = parseInt(JSON.parse(sessionStorage.getItem("user")).sem)
-        console.log("Sem : ", userSem)
+        Logger("Sem : ", userSem)
 
         // API Call to fetch user data :
         // Adding the API Call to fetch the user from the Database
@@ -40,8 +43,8 @@ function SubjectMaterial() {
 
         // Variable to handle the API Response and get the results
         const allSubjectMaterialData = await response.json()
-        console.log(allSubjectMaterialData)
-        console.log(allSubjectMaterialData.data)
+        Logger(allSubjectMaterialData)
+        Logger(allSubjectMaterialData.data)
 
         if (allSubjectMaterialData.success) {
             // Setting the data variable with the values we have
@@ -61,7 +64,7 @@ function SubjectMaterial() {
             await fetchAllSubjectMaterials();
         })();
 
-        console.log(materials)
+        Logger(materials)
 
     }, []); // The empty dependency array means this effect runs once, similar to componentDidMount
 

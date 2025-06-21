@@ -5,6 +5,8 @@ import InternalMenuBar from '../InternalMenuBar';
 import NavBreadcrumb from '../NavBreadcrumb';
 import announcementImg from "../../Images/announcementIcon03.png"
 import AnnouncementItem from '../Items/AnnouncementItem';
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function AnnouncementOperations() {
 
@@ -101,7 +103,7 @@ function AnnouncementOperations() {
             // Variable to handle the API Response
             const addAnnouncementResponse = await response.json()
 
-            console.log(addAnnouncementResponse)
+            Logger(addAnnouncementResponse)
 
             if (addAnnouncementResponse.success) {
                 // After a successful submission, hide the modal
@@ -132,7 +134,7 @@ function AnnouncementOperations() {
         // Variable to handle the API Response
         const fetchAnnouncementsResponse = await response.json()
 
-        console.log(fetchAnnouncementsResponse)
+        Logger(fetchAnnouncementsResponse)
 
         if (fetchAnnouncementsResponse.success) {
             setAnnouncementRecords(fetchAnnouncementsResponse.data)
@@ -152,7 +154,7 @@ function AnnouncementOperations() {
         // Variable to handle the API Response
         const deleteAnnouncementResponse = await response.json()
 
-        console.log(deleteAnnouncementResponse)
+        Logger(deleteAnnouncementResponse)
 
         if (deleteAnnouncementResponse.success) {
             // After a successful submission, hide the modal
@@ -173,7 +175,7 @@ function AnnouncementOperations() {
 
         const editAnnouncementForm = document.getElementById("EditAnnouncementForm")
 
-        console.log(EditAnnouncementRecord)
+        Logger(EditAnnouncementRecord)
 
         // event.preventDefault(); // Prevent the form from submitting
 
@@ -181,28 +183,28 @@ function AnnouncementOperations() {
 
         const role = sessionStorage.getItem("role")
         const updatedannouncementTitle = document.getElementById("updatedannouncementTitle").value;
-        console.log(updatedannouncementTitle)
+        Logger(updatedannouncementTitle)
 
         const updatedannouncementDescription = document.getElementById("updatedannouncementDescription").value;
-        console.log(updatedannouncementDescription)
+        Logger(updatedannouncementDescription)
 
         const updatedannouncementSem = (typeof document.getElementById("updatedannouncementSem").value === Number ? parseInt(document.getElementById("updatedannouncementSem").value) : document.getElementById("updatedannouncementSem").value);
-        console.log(updatedannouncementSem)
+        Logger(updatedannouncementSem)
 
         const updatedannouncementDivision = document.getElementById("updatedannouncementDivision").value;
-        console.log(updatedannouncementDivision)
+        Logger(updatedannouncementDivision)
 
         const updatedannouncementBatch = document.getElementById("updatedannouncementBatch").value;
-        console.log(updatedannouncementBatch)
+        Logger(updatedannouncementBatch)
 
         const updatedannouncementBy = role === "admin" ? "Admin" : role === "faculty" ? JSON.parse(sessionStorage.getItem("user")).name : "";
-        console.log(updatedannouncementBy)
+        Logger(updatedannouncementBy)
 
         const updatedannouncementLinkTitle = document.getElementById("updatedannouncementLinkTitle").value;
-        console.log(updatedannouncementLinkTitle)
+        Logger(updatedannouncementLinkTitle)
 
         let updatedannouncementLink = document.getElementById("updatedannouncementLink").value;
-        console.log(updatedannouncementLink)
+        Logger(updatedannouncementLink)
 
         if (!isSecureLink(updatedannouncementLink)) {
             updatedannouncementLink = "http://" + updatedannouncementLink
@@ -268,7 +270,7 @@ function AnnouncementOperations() {
             });
         }
 
-        console.log("Record : ", EditAnnouncementRecord)
+        Logger("Record : ", EditAnnouncementRecord)
     };
 
     const applyFilter = () => {
@@ -385,7 +387,7 @@ function AnnouncementOperations() {
                     FilteredRecords.length === 0 && AnnouncementRecords.map((announcement, index) => {
 
                         {/* const keys = Object.keys(announcement); */ }
-                        console.log(announcement)
+                        Logger(announcement)
 
                         return (
 
@@ -416,7 +418,7 @@ function AnnouncementOperations() {
                     FilteredRecords.length !== 0 && FilteredRecords.map((announcement, index) => {
 
                         {/* const keys = Object.keys(announcement); */ }
-                        console.log(announcement)
+                        Logger(announcement)
 
                         return (
 

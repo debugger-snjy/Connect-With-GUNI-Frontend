@@ -4,13 +4,16 @@ import ganpat_logo from "../Images/Ganpat_LOGO.png";
 import "../CSS/Login.css"
 import NoteContext from '../Context/NoteContext';
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function Login() {
 
     let navigateTo = useNavigate()
 
     // Using the function to get the data from the context
     const contextData = useContext(NoteContext);
-    console.log("Hello Login");
+    Logger("Hello Login");
 
     useEffect(() => {
         const role = sessionStorage.getItem("role")
@@ -36,7 +39,7 @@ function Login() {
         // Variable to handle the API Response
         const userData = await response.json()
 
-        console.log(userData)
+        Logger(userData)
 
         // Sending the response Data
         return userData
@@ -61,7 +64,7 @@ function Login() {
         // Variable to handle the API Response
         const loginResponse = await response.json()
 
-        console.log(loginResponse)
+        Logger(loginResponse)
 
         // Sending the response Data
         return loginResponse
@@ -70,22 +73,22 @@ function Login() {
     // Function to handle when user gets logged in !
     const handleLogin = async (event) => {
 
-        console.log("Login Submit !");
+        Logger("Login Submit !");
 
         event.preventDefault();
 
         let useremail = document.getElementById("useremail").value;
-        console.log(useremail);
+        Logger(useremail);
         let userpassword = document.getElementById("userpassword").value;
-        console.log(userpassword);
+        Logger(userpassword);
         let userrole = document.getElementById("userrole").value;
-        console.log(userrole)
+        Logger(userrole)
 
 
         // Adding the API Call to add the notes into the Database
         const response = await loginAPI(useremail, userpassword, userrole)
 
-        console.log(response);
+        Logger(response);
 
         // If the user is registered and we get its auth-token,
         // Then we will save that auth-token in the sessionStorage
@@ -97,7 +100,7 @@ function Login() {
             // Getting the User Info :
             const getuserResponse = await getInfoAPI(response.data.authToken)
 
-            console.log("Hii", getuserResponse)
+            Logger("Hii", getuserResponse)
 
             // Showing the Alert Box for the Fetching the Data
             contextData.showAlert("Fetching", "Fetching the User Data", "alert-warning")

@@ -6,6 +6,8 @@ import NavBreadcrumb from '../NavBreadcrumb';
 import studentMaleImg from "../../Images/student_male_image.png"
 import studentFemaleImg from "../../Images/student_female_image.png"
 import closeBtn from "../../Images/close_btn.png"
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function StudentOperations() {
     // Used to navigate things
@@ -95,7 +97,7 @@ function StudentOperations() {
             // Variable to handle the API Response
             const addStudentResponse = await response.json()
 
-            console.log(addStudentResponse)
+            Logger(addStudentResponse)
 
             if (addStudentResponse.success) {
                 // After a successful submission, hide the modal
@@ -127,7 +129,7 @@ function StudentOperations() {
         // Variable to handle the API Response
         const fetchStudentResponse = await response.json()
 
-        console.log(fetchStudentResponse)
+        Logger(fetchStudentResponse)
 
         if (fetchStudentResponse.success) {
             setStudentRecords(fetchStudentResponse.data)
@@ -147,7 +149,7 @@ function StudentOperations() {
         // Variable to handle the API Response
         const deleteStudentResponse = await response.json()
 
-        console.log(deleteStudentResponse)
+        Logger(deleteStudentResponse)
 
         if (deleteStudentResponse.success) {
             contextData.showAlert("Success", deleteStudentResponse.message, "alert-success")
@@ -179,7 +181,7 @@ function StudentOperations() {
         const updatedusergender = document.getElementById("updatedgenderMale").checked ? "male" : document.getElementById("updatedgenderFemale").checked ? "female" : "";
         const updateduserphone = parseInt(document.getElementById("updateduserphone").value);
 
-        // console.log(updateduserrole)
+        // Logger(updateduserrole)
 
         if (updateduserenroll == "" || updateduseremail == "" || updatedusersemster == "" || updateduserbatch == "" || updateduserdivision == "" || updateduserpassword == "" || updatedusername == "" || updatedusergender == "" || updateduserphone == "") {
             contextData.showAlert("Failed", "Some Fields are Empty !", "alert-danger")
@@ -207,7 +209,7 @@ function StudentOperations() {
             // Variable to handle the API Response
             const editStudentResponse = await response.json()
 
-            console.log(editStudentResponse)
+            Logger(editStudentResponse)
 
             if (editStudentResponse.success) {
                 // After a successful submission, hide the modal
@@ -235,21 +237,21 @@ function StudentOperations() {
             // Thus, when we write the title, then value of title will be the text that user will write
         })
 
-        console.log("EditStudent : ", EditStudentRecord)
+        Logger("EditStudent : ", EditStudentRecord)
 
     }
 
     // const applyFilter = (e) => {
     //     // If the filter value is empty, reset to the original records
-    //     console.log(e.target.value)
+    //     Logger(e.target.value)
     //     if (e.target.value === "") {
     //         FetchStudentAPI(); // Assuming FetchStudentAPI() fetches the original records
-    //         console.log("No")
+    //         Logger("No")
     //         setFilteredRecords(StudentRecords)
 
     //     } else {
     //         let filteredRecords;
-    //         console.log("Yes")
+    //         Logger("Yes")
 
 
     //         // Apply the filter based on the target name
@@ -385,7 +387,7 @@ function StudentOperations() {
                             FilteredRecords.length === 0 && StudentRecords.map((student, index) => {
 
                                 const keys = Object.keys(student);
-                                {/* console.log(student) */ }
+                                {/* Logger(student) */ }
 
                                 return (
 
@@ -420,7 +422,7 @@ function StudentOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", student[data]) */ }
+                                                                        {/* Logger(data, " --> ", student[data]) */ }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData") { }
                                                                         else {
                                                                             return (
@@ -450,7 +452,7 @@ function StudentOperations() {
                             FilteredRecords.length !== 0 && FilteredRecords.map((student, index) => {
 
                                 const keys = Object.keys(student);
-                                {/* console.log(student) */ }
+                                {/* Logger(student) */ }
 
                                 return (
 
@@ -485,7 +487,7 @@ function StudentOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", student[data]) */ }
+                                                                        {/* Logger(data, " --> ", student[data]) */ }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData") { }
                                                                         else {
                                                                             return (

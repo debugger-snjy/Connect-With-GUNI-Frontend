@@ -4,11 +4,14 @@ import React, { useContext } from 'react'
 // Using the Context API
 import NoteContext from '../Context/NoteContext';
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 // As we needed the data from the props
 export default function NoteItem(props) {
 
     const contextData = useContext(NoteContext);
-    // console.log(contextData);
+    // Logger(contextData);
     // Destructuring Data
     // Here we only need a addNote function
     const { deleteNote } = contextData;
@@ -23,32 +26,32 @@ export default function NoteItem(props) {
     // Function to change the color to hover color on hover
     // const hoverEditEffect = () => {
     //     const editElements = document.getElementsByClassName("editIcon");
-    //     // console.log(editElements);  // ===> Just for Checking
+    //     // Logger(editElements);  // ===> Just for Checking
     //     for (let i = 0; i < editElements["length"]; i++) {
-    //         console.log(editElements[i].style.color = "#FF0000");
+    //         Logger(editElements[i].style.color = "#FF0000");
     //     }
     // }
 
     // const hoverDeleteEffect = () => {
     //     const deleteElements = document.getElementsByClassName("deleteIcon");
     //     for (let i = 0; i < deleteElements["length"]; i++) {
-    //         console.log(deleteElements[i].style.color = "#FF0000");
+    //         Logger(deleteElements[i].style.color = "#FF0000");
     //     }
     // }
 
     // Function to change hover color to original color on hover
     // const removeHoverEditEffect = () => {
     //     const editElements = document.getElementsByClassName("editIcon");
-    //     // console.log(editElements);  // ===> Just for Checking
+    //     // Logger(editElements);  // ===> Just for Checking
     //     for (let i = 0; i < editElements["length"]; i++) {
-    //         console.log(editElements[i].style.color = "#FF0000");
+    //         Logger(editElements[i].style.color = "#FF0000");
     //     }
     // }
 
     // const removeHoverDeleteEffect = () => {
     //     const deleteElements = document.getElementsByClassName("deleteIcon");
     //     for (let i = 0; i < deleteElements["length"]; i++) {
-    //         console.log(deleteElements[i].style.color = "#FF0000");
+    //         Logger(deleteElements[i].style.color = "#FF0000");
     //     }
     // }
 

@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import NoteContext from '../../Context/NoteContext';
 import InternalMenuBar from '../InternalMenuBar';
 import NavBreadcrumb from '../NavBreadcrumb';
-
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 import marksheetImg from "../../Images/marksheetImg.png"
 
 function MarksheetOperations() {
@@ -84,7 +85,7 @@ function MarksheetOperations() {
                 marksheetData.push([code, subjectName, parseInt(credits), grade, parseInt(score), parseInt(total)]);
             }
 
-            console.log("Row Added !")
+            Logger("Row Added !")
         }
 
         if ((marksheetMarksheetSem === "" || marksheetEnroll === "" || marksheetDate === "" || marksheetResult === "" || marksheetGrade === "") && !remaining) {
@@ -100,7 +101,7 @@ function MarksheetOperations() {
                 "data": marksheetData,
             };
 
-            console.log("Add Marksheet Data : ", formData)
+            Logger("Add Marksheet Data : ", formData)
 
             // Calling the Add Marksheet API
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/marksheet/upload`, {
@@ -114,7 +115,7 @@ function MarksheetOperations() {
             // Variable to handle the API Response
             const addMarksheetResponse = await response.json()
 
-            console.log(addMarksheetResponse)
+            Logger(addMarksheetResponse)
 
             if (addMarksheetResponse.success) {
                 // After a successful submission, hide the modal
@@ -146,7 +147,7 @@ function MarksheetOperations() {
         // Variable to handle the API Response
         const fetchMarksheetResponse = await response.json()
 
-        console.log(fetchMarksheetResponse)
+        Logger(fetchMarksheetResponse)
 
         if (fetchMarksheetResponse.success) {
             // Setting the Marksheet Records
@@ -175,7 +176,7 @@ function MarksheetOperations() {
         // Variable to handle the API Response
         const deleteMarksheetResponse = await response.json()
 
-        console.log(deleteMarksheetResponse)
+        Logger(deleteMarksheetResponse)
 
         if (deleteMarksheetResponse.success) {
             // Showing the Alert Message that Marksheet Deleted
@@ -225,7 +226,7 @@ function MarksheetOperations() {
                 updatedmarksheetData.push([updatedcode, updatedsubjectName, parseInt(updatedcredits), updatedgrade, parseInt(updatedscore), parseInt(updatedtotal)]);
             }
 
-            console.log("Row Added !")
+            Logger("Row Added !")
         }
 
         if ((updatedmarksheetMarksheetSem === "" || updatedmarksheetEnroll === "" || updatedmarksheetDate === "" || updatedmarksheetResult === "" || updatedmarksheetGrade === "") && !remaining) {
@@ -241,7 +242,7 @@ function MarksheetOperations() {
                 "data": updatedmarksheetData,
             };
 
-            console.log("Edit Marksheet Data : ", editFormData)
+            Logger("Edit Marksheet Data : ", editFormData)
 
             // Calling the Add Marksheet API
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/marksheet/update/${marksheetId}`, {
@@ -255,7 +256,7 @@ function MarksheetOperations() {
             // Variable to handle the API Response
             const editMarksheetResponse = await response.json()
 
-            console.log(editMarksheetResponse)
+            Logger(editMarksheetResponse)
 
             if (editMarksheetResponse.success) {
                 // After a successful submission, hide the modal
@@ -279,7 +280,7 @@ function MarksheetOperations() {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        console.log(`${year}-${month}-${day}`)
+        Logger(`${year}-${month}-${day}`)
         return `${year}-${month}-${day}`;
     }
 
@@ -443,7 +444,7 @@ function MarksheetOperations() {
                             FilteredRecords.length === 0 && MarksheetRecords.map((marksheet, index) => {
 
                                 const keys = Object.keys(marksheet);
-                                console.log(marksheet)
+                                Logger(marksheet)
 
                                 marksheet.marksheetDate = formatDate(marksheet.marksheetDate)
 
@@ -482,7 +483,7 @@ function MarksheetOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         let fieldname = "Marksheet " + data.split("marksheet")[1]
-                                                                        console.log(data, " --> ", marksheet[data])
+                                                                        Logger(data, " --> ", marksheet[data])
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "marksheetlectures") { }
                                                                         else if (data === "marksheetData") {
                                                                             return (
@@ -552,7 +553,7 @@ function MarksheetOperations() {
                             FilteredRecords.length !== 0 && FilteredRecords.map((marksheet, index) => {
 
                                 const keys = Object.keys(marksheet);
-                                console.log(marksheet)
+                                Logger(marksheet)
 
                                 marksheet.marksheetDate = formatDate(marksheet.marksheetDate)
 
@@ -591,7 +592,7 @@ function MarksheetOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         let fieldname = "Marksheet " + data.split("marksheet")[1]
-                                                                        console.log(data, " --> ", marksheet[data])
+                                                                        Logger(data, " --> ", marksheet[data])
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "marksheetlectures") { }
                                                                         else if (data === "marksheetData") {
                                                                             return (
@@ -860,7 +861,7 @@ function MarksheetOperations() {
                                                         {/* Fetching into the Subjects */}
                                                         {
                                                             EditMarksheetRecord.marksheetData && EditMarksheetRecord.marksheetData.map((subjectFields, index) => {
-                                                                console.log(subjectFields)
+                                                                Logger(subjectFields)
 
                                                                 return (
                                                                     <tr>

@@ -2,6 +2,9 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
+
 function SubjectItem(props) {
 
     // Used to navigate things
@@ -10,11 +13,11 @@ function SubjectItem(props) {
 
     // Function to move the user to materials page
     const movetoMaterial = (subjectname) => {
-        console.log("Hello Subject : ",subjectname)
+        Logger("Hello Subject : ",subjectname)
         navigateTo(`${location.pathname}/subject/${subjectname}`)
     }
 
-    console.log(props.faculties)
+    Logger(props.faculties)
     return (
         <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
             <div className="card itemCard" onClick={()=>{movetoMaterial(props.shortform)}}>

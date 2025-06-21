@@ -6,6 +6,10 @@ import femaleFaculty from "../Images/female_faculty.png"
 import maleFaculty from "../Images/male_faculty.png"
 import { useLocation } from 'react-router-dom'
 import NoteContext from '../Context/NoteContext'
+
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function FacultyDetails() {
 
     let location = useLocation()
@@ -34,7 +38,7 @@ function FacultyDetails() {
         // Variable to handle the API Response
         const facultyData = await response.json()
 
-        console.log(facultyData)
+        Logger(facultyData)
 
         // Sending the response Data
         return facultyData.data
@@ -42,7 +46,7 @@ function FacultyDetails() {
 
     useEffect(() => {
         getFacultiesInfo().then((data) => {
-            console.log(data)
+            Logger(data)
             setuserFaculty(data)
             contextData.updateRecentlyAccessed('Faculty Info', `${location.pathname}`);
         })

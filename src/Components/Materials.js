@@ -7,6 +7,9 @@ import NavBreadcrumb from './NavBreadcrumb';
 import NoteContext from '../Context/NoteContext';
 import { useLocation } from 'react-router-dom';
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function Materials() {
 
     // Using the Context API
@@ -31,7 +34,7 @@ function Materials() {
 
         // Variable to handle the API Response and get the results
         const allSubjectData = await response.json()
-        console.log(allSubjectData)
+        Logger(allSubjectData)
 
         if (allSubjectData.success) {
             // Setting the data variable with the values we have
@@ -49,7 +52,7 @@ function Materials() {
 
         contextData.updateRecentlyAccessed('Materials', `${location.pathname}`);
 
-        console.log(data.data)
+        Logger(data.data)
     }, []); // The empty dependency array means this effect runs once, similar to componentDidMount
 
 

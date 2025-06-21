@@ -6,6 +6,9 @@ import NavBreadcrumb from "../Components/NavBreadcrumb"
 import maleUser from "../Images/user_male1.png"
 import femaleUser from "../Images/user_female1.png"
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function ViewProfile() {
 
     let navigateTo = useNavigate()
@@ -57,7 +60,7 @@ function ViewProfile() {
         // Variable to handle the API Response
         const userDataResponse = await response.json()
 
-        console.log(userDataResponse)
+        Logger(userDataResponse)
 
         setuserData(userDataResponse.data.user)
 

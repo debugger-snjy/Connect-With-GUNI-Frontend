@@ -6,6 +6,9 @@ import feesImg from "../Images/fees.png"
 import { useLocation } from 'react-router-dom'
 import NoteContext from '../Context/NoteContext'
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function Fees() {
 
     let location = useLocation()
@@ -33,7 +36,7 @@ function Fees() {
         // Variable to handle the API Response
         const feesData = await response.json()
 
-        console.log(feesData)
+        Logger(feesData)
 
         // Sending the response Data
         return feesData.data
@@ -41,7 +44,7 @@ function Fees() {
 
     useEffect(() => {
         getFeesReceipts().then((data) => {
-            console.log(data)
+            Logger(data)
             setuserFeesReceipts(data)
             contextData.updateRecentlyAccessed('Fees Recipts', `${location.pathname}`);
         })
@@ -52,7 +55,7 @@ function Fees() {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        console.log(`${year}-${month}-${day}`)
+        Logger(`${year}-${month}-${day}`)
         return `${year}-${month}-${day}`;
     }
 
@@ -75,7 +78,7 @@ function Fees() {
                             userFees.map((fees, index) => {
 
                                 const keys = Object.keys(fees);
-                                console.log(fees)
+                                Logger(fees)
 
                                 fees.feesDate = formatDate(fees.feesDate)
 
@@ -112,9 +115,9 @@ function Fees() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        console.log(data, " --> ", fees[data])
+                                                                        Logger(data, " --> ", fees[data])
                                                                         if (data.toLowerCase() === "faculties") {
-                                                                            console.log(fees[data])
+                                                                            Logger(fees[data])
                                                                         }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "feeslectures") { }
                                                                         else {

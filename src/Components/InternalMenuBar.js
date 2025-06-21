@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function InternalMenuBar() {
 
     let navigateTo = useNavigate();
@@ -10,10 +13,10 @@ function InternalMenuBar() {
 
     if (sessionStorage.getItem("user")) {
         user = JSON.parse(sessionStorage.getItem("user"))
-        // console.log("Internal : ", user)
+        // Logger("Internal : ", user)
     }
     else {
-        // console.log("Logout User !!")
+        // Logger("Logout User !!")
         navigateTo("/")
     }
 
@@ -31,9 +34,9 @@ function InternalMenuBar() {
                 <div className="col-xsm-12 col-sm-12 col-md-12 col-lg-7 col-xl-6 col-xxl-5 text-left" >
                     <div className="row flex-row-reverse">
                         <div className={`col-md-12 col-lg-3 menutextStyle mt-2`}><Link to="/" onClick={logoutUser}>Logout</Link></div>
-                        {user.role === "student" && <div className="col-md-12 col-lg-3 menutextStyle mt-2"><Link to={`http://localhost:3000/dashboard/${sessionStorage.getItem("role")}/marksheets`}>Marksheets</Link></div>}
+                        {user.role === "student" && <div className="col-md-12 col-lg-3 menutextStyle mt-2"><Link to={`/dashboard/${sessionStorage.getItem("role")}/marksheets`}>Marksheets</Link></div>}
                         <div className={`col-md-12 col-lg-3 menutextStyle mt-2`}><Link to={`/dashboard/${sessionStorage.getItem("role")}/profile`}>View Profile</Link></div>
-                        {user.role === "student" && <div className="col-md-12 col-lg-3 menutextStyle mt-2"><Link to={`http://localhost:3000/dashboard/${sessionStorage.getItem("role")}/fees`}>Fee Receipts</Link></div>}
+                        {user.role === "student" && <div className="col-md-12 col-lg-3 menutextStyle mt-2"><Link to={`/dashboard/${sessionStorage.getItem("role")}/fees`}>Fee Receipts</Link></div>}
                     </div>
                 </div>
             </div>

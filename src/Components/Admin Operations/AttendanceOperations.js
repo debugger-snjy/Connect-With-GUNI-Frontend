@@ -4,6 +4,8 @@ import NoteContext from '../../Context/NoteContext';
 import InternalMenuBar from '../InternalMenuBar';
 import NavBreadcrumb from '../NavBreadcrumb';
 import AttendanceBookImg from "../../Images/attendance_sheet.png"
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function AttendanceOperations() {
     // Used to navigate things
@@ -57,7 +59,7 @@ function AttendanceOperations() {
         // Variable to handle the API Response
         const fetchAttendanceResponse = await response.json()
 
-        console.log(fetchAttendanceResponse)
+        Logger(fetchAttendanceResponse)
 
         if (fetchAttendanceResponse.success) {
             setAttendanceRecords(fetchAttendanceResponse.data)
@@ -99,7 +101,7 @@ function AttendanceOperations() {
             // Variable to handle the API Response
             const addAttendanceResponse = await response.json()
 
-            console.log(addAttendanceResponse)
+            Logger(addAttendanceResponse)
 
             if (addAttendanceResponse.success) {
                 // After a successful submission, hide the modal
@@ -244,7 +246,7 @@ function AttendanceOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", material[data]) */ }
+                                                                        {/* Logger(data, " --> ", material[data]) */ }
                                                                         if (data === "_id" || data === "__v") { }
                                                                         else {
                                                                             return (
@@ -302,7 +304,7 @@ function AttendanceOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", material[data]) */ }
+                                                                        {/* Logger(data, " --> ", material[data]) */ }
                                                                         if (data === "_id" || data === "__v") { }
                                                                         else {
                                                                             return (

@@ -4,6 +4,8 @@ import NavBreadcrumb from './NavBreadcrumb';
 import recentImg from "../Images/recent.png"
 import underconstruction from "../Images/UnderConstruction.png"
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
 
 function RecentAccessed() {
 
@@ -27,13 +29,13 @@ function RecentAccessed() {
 
         // Variable to handle the API Response and get the results
         const allRecentAccessed = await response.json()
-        console.log(allRecentAccessed)
+        Logger(allRecentAccessed)
 
         if (allRecentAccessed.recentAccessed === "No Records Found !!") {
             setRecentlyAccessed([])
         }
         else {
-            console.log(allRecentAccessed.data[0].recentData)
+            Logger(allRecentAccessed.data[0].recentData)
             setRecentlyAccessed(allRecentAccessed.data[0].recentData.reverse())
         }
     }

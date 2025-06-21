@@ -2,6 +2,9 @@ import { useState } from "react";
 import NoteContext from "./NoteContext";
 import axios from "axios";
 
+// Importing the Logger Function to Log
+import Logger from "../Utils/Logger";
+
 const NoteState = (props) => {
 
     // Getting the NOTES from the DATABASE :
@@ -55,13 +58,13 @@ const NoteState = (props) => {
         const addNoteResponse = await response.json();
 
         // Checking
-        console.log("New Note : ", addNoteResponse);
+        Logger("New Note : ", addNoteResponse);
 
         // Now, adding all the notes in the userNotes state variable and will display all the notes from database !
         // This change is because we have added the msg and status field in the note response
         setuserNotes(userNotes.concat(addNoteResponse.data))
 
-        console.log(userNotes);
+        Logger(userNotes);
 
         // Returning the response object as we have to show alert message
         return addNoteResponse;
@@ -69,7 +72,7 @@ const NoteState = (props) => {
         // fetchAllNotes()
 
         // Checking
-        // console.log("Adding a new Note");
+        // Logger("Adding a new Note");
 
         // // Now, it will set the title,description and tags that we pass !
         // const newNote = {
@@ -91,11 +94,11 @@ const NoteState = (props) => {
         // ✅ Done TODO : Make an API Call Here !
 
         // Checking for the Values
-        console.log(id);
-        console.log(title);
-        console.log(description);
-        console.log(tags);
-        // console.log(JSON.stringify({title,description,tags}))
+        Logger(id);
+        Logger(title);
+        Logger(description);
+        Logger(tags);
+        // Logger(JSON.stringify({title,description,tags}))
 
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/update/${id}`, {
             method: "PUT", // As editnote is a PUT method
@@ -112,7 +115,7 @@ const NoteState = (props) => {
         })
         const editedNote = await response.json()
 
-        console.log("Note is Edited !!");
+        Logger("Note is Edited !!");
 
         // fetchAllNotes();  // ====> We can do that but, it will increase the api requests because for update note, we call api for 2 time get API + fetch API
 
@@ -121,10 +124,10 @@ const NoteState = (props) => {
 
         for (let index = 0; index < newuserNotes.length; index++) {
             const element = newuserNotes[index];
-            // console.log(element);
+            // Logger(element);
             // Finding the Note that we have to edit
             if (element._id === id) {
-                console.log("Editing");
+                Logger("Editing");
                 // Editing title, description and tags
                 // We cannot edit the state variable directly, we have to use the setuserNotes set state function
                 // userNotes[index].title = title;
@@ -139,7 +142,7 @@ const NoteState = (props) => {
             }
         }
 
-        // console.log(newuserNotes); // Checking
+        // Logger(newuserNotes); // Checking
         // Now, setting the newuserNotes in the userNote State Variable
         setuserNotes(newuserNotes)
 
@@ -168,10 +171,10 @@ const NoteState = (props) => {
         // parses JSON response into native JavaScript objects and using await as the function is asynchronus function
         const deletedNote = await response.json();
 
-        console.log("Deleting the note !!", deletedNote);
+        Logger("Deleting the note !!", deletedNote);
 
-        console.log(deletedNote);
-        console.log(deletedNote["status"]);
+        Logger(deletedNote);
+        Logger(deletedNote["status"]);
 
         // Showing the Alert Message
         if (deletedNote.success)
@@ -190,7 +193,7 @@ const NoteState = (props) => {
     // Function to Fetch all Note From the Database using the Backend API
     const fetchAllNotes = async () => {
 
-        console.log("Fetching All Notes !");
+        Logger("Fetching All Notes !");
         // ✅ Done TODO : Make an API Call Here !
 
         // Showing the Alert Message
@@ -214,7 +217,7 @@ const NoteState = (props) => {
         const allNotesFromDb = await response.json();
 
         // Checking
-        // console.log(allNotesFromDb);
+        // Logger(allNotesFromDb);
 
         // Now, adding all the notes in the userNotes state variable and will display all the notes from database !
         setuserNotes(allNotesFromDb.data)
@@ -225,13 +228,13 @@ const NoteState = (props) => {
     // Function to fetch the user Details
     const fetchUser = async () => {
 
-        console.log("Fetching User Info !");
+        Logger("Fetching User Info !");
         // ✅ Done TODO : Make an API Call Here !
 
         // Showing the Alert Message
         showAlert("Info", "Fetching Your Details", "alert-info")
 
-        console.log(sessionStorage.getItem("token"));
+        Logger(sessionStorage.getItem("token"));
 
         // Adding the API Call to fetch all the notes
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getuser`, {
@@ -251,12 +254,12 @@ const NoteState = (props) => {
         const userInfo = await response.json();
 
         // Checking
-        // console.log(userInfo);
-        // console.log(userInfo.user.date)
+        // Logger(userInfo);
+        // Logger(userInfo.user.date)
 
         // Sending the Formatted Date Time !
         userInfo.data.user.date = formattedDateTime(userInfo.data.user.date)
-        // console.log(userInfo.data.user.date)
+        // Logger(userInfo.data.user.date)
 
         setUser(userInfo.data.user)
 
@@ -297,7 +300,7 @@ const NoteState = (props) => {
 
         // Adding zero in beginning of the single digit numbers
         const addZero = (text) => {
-            // console.log("text :", text);
+            // Logger("text :", text);
             if (text >= 0 && text <= 9) {
                 return "0" + text
             }
@@ -311,7 +314,7 @@ const NoteState = (props) => {
         const noteDate = addZero(datetime.getDate()) + " " + addZero(months[datetime.getMonth() - 1]) + " " + datetime.getFullYear()
 
         // Checking
-        // console.log(noteDate, noteTime, datetime.getMonth(), months[datetime.getMonth() - 1]);
+        // Logger(noteDate, noteTime, datetime.getMonth(), months[datetime.getMonth() - 1]);
 
         // Returning the Date and Time in a form of String
         return `${noteDate} ${noteTime}`;
@@ -369,7 +372,7 @@ const NoteState = (props) => {
     // Function to Download the File or Material !
     const downloadFile = async (fileurl, filename, filetype) => {
 
-        console.log("Download Process 1")
+        Logger("Download Process 1")
         try {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/download`, {
                 headers: {
@@ -379,7 +382,7 @@ const NoteState = (props) => {
                 body: JSON.stringify({ fileurl, filename, filetype })
             });
 
-            // console.log(filename);
+            // Logger(filename);
 
             // Create a link element and initiate the download
             // const url = window.URL.createObjectURL(new Blob([response.data]));

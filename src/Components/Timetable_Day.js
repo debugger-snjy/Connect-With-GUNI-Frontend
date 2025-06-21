@@ -10,6 +10,9 @@ import subjectIcon from "../Images/subjectIcon.png"
 import locationIcon from "../Images/location.png"
 import underconstruction from "../Images/UnderConstruction.png"
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function Timetable_Day(props) {
 
     // Used to navigate things
@@ -77,7 +80,7 @@ function Timetable_Day(props) {
         // Variable to handle the API Response
         const fetchTimteableResponse = await response.json()
 
-        console.log(fetchTimteableResponse)
+        Logger(fetchTimteableResponse)
 
         if (fetchTimteableResponse.data.length > 0) {
             setDayTimetableRecord(fetchTimteableResponse.data[0].data[today.toString()])
@@ -126,8 +129,8 @@ function Timetable_Day(props) {
                 <div className="container-fluid dayDescription">
                     {
                         Object.keys(daytimetableRecord).map((period, index) => {
-                            console.log(period)
-                            console.log(daytimetableRecord[period])
+                            Logger(period)
+                            Logger(daytimetableRecord[period])
 
                             return (
                                 <div className="card bg-white m-3 timetableCard" key={`${index}`}>

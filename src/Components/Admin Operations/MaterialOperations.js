@@ -9,6 +9,8 @@ import imageIcon from "../../Images/imageIcon.png"
 import docIcon from "../../Images/docIcon.png"
 import audioIcon from "../../Images/audioIcon.png"
 import unknownIcon from "../../Images/unknownIcon.png"
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function MaterialOperations() {
     // Used to navigate things
@@ -85,7 +87,7 @@ function MaterialOperations() {
             // Variable to handle the API Response
             const addMaterialResponse = await response.json()
 
-            console.log(addMaterialResponse)
+            Logger(addMaterialResponse)
 
             if (addMaterialResponse.success) {
                 // After a successful submission, hide the modal
@@ -118,7 +120,7 @@ function MaterialOperations() {
         // Variable to handle the API Response
         const fetchMaterialResponse = await response.json()
 
-        console.log(fetchMaterialResponse)
+        Logger(fetchMaterialResponse)
 
         if (fetchMaterialResponse.success) {
             // If the response is successful, set the Material Records
@@ -144,7 +146,7 @@ function MaterialOperations() {
         // Variable to handle the API Response
         const deleteMaterialResponse = await response.json()
 
-        console.log(deleteMaterialResponse)
+        Logger(deleteMaterialResponse)
 
         if (deleteMaterialResponse.success) {
             // If the response is successful, show an alert and refresh the records
@@ -260,7 +262,7 @@ function MaterialOperations() {
 
                                 const keys = Object.keys(material);
                                 let materialImg;
-                                {/* console.log(material) */ }
+                                {/* Logger(material) */ }
 
                                 if (material.type === 'image') {
                                     materialImg = imageIcon
@@ -314,7 +316,7 @@ function MaterialOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", material[data]) */}
+                                                                        {/* Logger(data, " --> ", material[data]) */}
                                                                         if (data === "_id" || data === "__v") { }
                                                                         else if (data === "uploadedBy") {
                                                                             return (
@@ -353,7 +355,7 @@ function MaterialOperations() {
 
                                 const keys = Object.keys(material);
                                 let materialImg;
-                                {/* console.log(material) */ }
+                                {/* Logger(material) */ }
 
                                 if (material.type === 'image') {
                                     materialImg = imageIcon
@@ -407,7 +409,7 @@ function MaterialOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        {/* console.log(data, " --> ", material[data]) */ }
+                                                                        {/* Logger(data, " --> ", material[data]) */ }
                                                                         if (data === "_id" || data === "__v") { }
                                                                         else if (data === "uploadedBy") {
                                                                             return (

@@ -4,6 +4,8 @@ import NoteContext from '../../Context/NoteContext';
 import InternalMenuBar from '../InternalMenuBar';
 import NavBreadcrumb from '../NavBreadcrumb';
 
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 import feesImg from "../../Images/fees.png"
 
 function FeesOperations() {
@@ -89,7 +91,7 @@ function FeesOperations() {
             // Variable to handle the API Response
             const addFeesResponse = await response.json()
 
-            console.log(addFeesResponse)
+            Logger(addFeesResponse)
 
             if (addFeesResponse.success) {
                 // After a successful submission, hide the modal
@@ -122,7 +124,7 @@ function FeesOperations() {
         // Variable to handle the API Response
         const fetchFeesResponse = await response.json()
 
-        console.log(fetchFeesResponse)
+        Logger(fetchFeesResponse)
 
         if (fetchFeesResponse.success) {
             // If the response is successful, set the FeesRecords state
@@ -148,7 +150,7 @@ function FeesOperations() {
         // Variable to handle the API Response
         const deleteFeesResponse = await response.json()
 
-        console.log(deleteFeesResponse)
+        Logger(deleteFeesResponse)
 
         if (deleteFeesResponse.success) {
             // If the response is successful, show an alert
@@ -173,7 +175,7 @@ function FeesOperations() {
         const editFeesForm = document.getElementById("EditFeesForm")
 
         // event.preventDefault(); // Prevent the form from submitting
-        console.log(EditFeesRecord)
+        Logger(EditFeesRecord)
 
         // Access form fields by their Ids
         const updatedfeesSem = document.getElementById("updatedfeesSem").value;
@@ -184,7 +186,7 @@ function FeesOperations() {
         const updatedfeesAmount = document.getElementById("updatedfeesAmount").value;
         const updatedfeesEnroll = document.getElementById("updatedfeesEnroll").value;
 
-        // console.log(updateduserrole)
+        // Logger(updateduserrole)
 
         if (updatedfeesSem === "" || updatedfeesTitle === "" || updatedfeesId === "" || updatedfeesDate === "" || updatedfeesMode === "" || updatedfeesAmount === "" || updatedfeesEnroll === "") {
             contextData.showAlert("Failed", "Some Fields are Empty !", "alert-danger")
@@ -209,7 +211,7 @@ function FeesOperations() {
             // Variable to handle the API Response
             const editFeesResponse = await response.json()
 
-            console.log(editFeesResponse)
+            Logger(editFeesResponse)
 
             if (editFeesResponse.success) {
                 // After a successful submission, hide the modal
@@ -235,7 +237,7 @@ function FeesOperations() {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        console.log(`${year}-${month}-${day}`)
+        Logger(`${year}-${month}-${day}`)
         return `${year}-${month}-${day}`;
     }
 
@@ -249,7 +251,7 @@ function FeesOperations() {
             // Thus, when we write the title, then value of title will be the text that user will write
         })
 
-        console.log("EditFees : ", EditFeesRecord)
+        Logger("EditFees : ", EditFeesRecord)
 
     }
 
@@ -355,7 +357,7 @@ function FeesOperations() {
                             FilteredRecords.length === 0 && FeesRecords.map((fees, index) => {
 
                                 const keys = Object.keys(fees);
-                                console.log(fees)
+                                Logger(fees)
 
                                 fees.feesDate = formatDate(fees.feesDate)
 
@@ -393,9 +395,9 @@ function FeesOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        console.log(data, " --> ", fees[data])
+                                                                        Logger(data, " --> ", fees[data])
                                                                         if (data.toLowerCase() === "faculties") {
-                                                                            console.log(fees[data])
+                                                                            Logger(fees[data])
                                                                         }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "feeslectures") { }
                                                                         else {
@@ -425,7 +427,7 @@ function FeesOperations() {
                             FilteredRecords.length !== 0 && FilteredRecords.map((fees, index) => {
 
                                 const keys = Object.keys(fees);
-                                console.log(fees)
+                                Logger(fees)
 
                                 fees.feesDate = formatDate(fees.feesDate)
 
@@ -463,9 +465,9 @@ function FeesOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        console.log(data, " --> ", fees[data])
+                                                                        Logger(data, " --> ", fees[data])
                                                                         if (data.toLowerCase() === "faculties") {
-                                                                            console.log(fees[data])
+                                                                            Logger(fees[data])
                                                                         }
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "feeslectures") { }
                                                                         else {

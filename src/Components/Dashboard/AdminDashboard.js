@@ -20,67 +20,68 @@ import NoteContext from '../../Context/NoteContext'
 import InternalMenuBar from '../InternalMenuBar'
 import NavBreadcrumb from '../NavBreadcrumb'
 import AnnouncementItem from '../Items/AnnouncementItem'
+import Logger from '../../Utils/Logger'
 
 function AdminDashboard() {
 
     const openAdminOperations = () => {
-        console.log("This is a Admin Operations");
+        Logger("This is a Admin Operations");
         navigateTo(`${location.pathname}/admin_operations`)
     }
 
     const openStudentOperations = () => {
-        console.log("This is a Student Operations");
+        Logger("This is a Student Operations");
         navigateTo(`${location.pathname}/student_operations`)
     }
 
     const openFacultyOperations = () => {
-        console.log("This is a Faculty Operations");
+        Logger("This is a Faculty Operations");
         navigateTo(`${location.pathname}/faculty_operations`)
     }
 
     const openUploadMaterials = () => {
-        console.log("This is a Upload Materials");
+        Logger("This is a Upload Materials");
         navigateTo(`${location.pathname}/materials_operations`)
     }
 
     const openUploadAttendance = () => {
-        console.log("This is a Upload Attendance");
+        Logger("This is a Upload Attendance");
         navigateTo(`${location.pathname}/attendance_operations`)
     }
 
     const openSubjectOperations = () => {
-        console.log("This is a Subject Operations");
+        Logger("This is a Subject Operations");
         navigateTo(`${location.pathname}/subject_operations`)
     }
 
     const openTimetableOperations = () => {
-        console.log("This is a Timetable Operations");
+        Logger("This is a Timetable Operations");
         navigateTo(`${location.pathname}/timetable_operations`)
     }
 
     const openFeesOperations = () => {
-        console.log("This is a Fees Operations");
+        Logger("This is a Fees Operations");
         navigateTo(`${location.pathname}/fees_operations`)
     }
 
     const openMarksheetOperations = () => {
-        console.log("This is a Marksheet Operations");
+        Logger("This is a Marksheet Operations");
         navigateTo(`${location.pathname}/marksheet_operations`)
     }
 
     const openRecentAccessed = () => {
-        console.log("This is a Recent Accessed");
+        Logger("This is a Recent Accessed");
         navigateTo(`${location.pathname}/recently_accessed`)
     }
 
     // Function to move the user to remainders page
     const openRemainders = () => {
-        console.log("This is a Remainders Pages")
+        Logger("This is a Remainders Pages")
         navigateTo(`${location.pathname}/remainders`)
     }
 
     const openAnnouncements = () => {
-        console.log("This is a Announcements");
+        Logger("This is a Announcements");
         navigateTo(`${location.pathname}/announcements`)
     }
 
@@ -153,7 +154,7 @@ function AdminDashboard() {
         // Variable to handle the API Response
         const announcementResponse = await response.json()
 
-        console.log(announcementResponse)
+        Logger(announcementResponse)
 
         if (announcementResponse.success) {
             // If the response is successful then set the notes in the state
@@ -297,7 +298,7 @@ function AdminDashboard() {
                     {
                         announcements.map((announcement) => {
 
-                            console.log(announcement)
+                            Logger(announcement)
 
                             return (
                                 <div key={announcement._id}>

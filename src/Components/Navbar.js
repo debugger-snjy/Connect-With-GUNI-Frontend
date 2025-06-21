@@ -3,6 +3,9 @@ import ganpat_icon from "../Images/Ganpat_Icon.png";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 export default function Navbar() {
     const fixednavbarStyle = {
         // "position": "fixed",
@@ -18,14 +21,14 @@ export default function Navbar() {
 
     React.useEffect(() => {
         // Logging for checking
-        // console.log("Getting Location : ",location);
-        // console.log("Getting Location Pathname : ",location.pathname);
+        // Logger("Getting Location : ",location);
+        // Logger("Getting Location Pathname : ",location.pathname);
     }, [location]);
 
     const logoutUser = () => {
         sessionStorage.removeItem("token");
         navigateTo("/");
-        console.log("Signing");
+        Logger("Signing");
     }
 
     const aboutUser = () => {

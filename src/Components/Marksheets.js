@@ -7,6 +7,9 @@ import NavBreadcrumb from './NavBreadcrumb'
 import underconstruction from "../Images/UnderConstruction.png"
 import marksheetImg from "../Images/marksheetImg.png"
 
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
+
 function Marksheets() {
 
     // Used to navigate things
@@ -66,7 +69,7 @@ function Marksheets() {
         // Variable to handle the API Response
         const fetchAllStudentMarksheets = await response.json()
 
-        console.log(fetchAllStudentMarksheets)
+        Logger(fetchAllStudentMarksheets)
 
         if (fetchAllStudentMarksheets.success) {
             // If the API call is successful then set the Marksheet Records
@@ -84,7 +87,7 @@ function Marksheets() {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        console.log(`${year}-${month}-${day}`)
+        Logger(`${year}-${month}-${day}`)
         return `${year}-${month}-${day}`;
     }
 
@@ -110,7 +113,7 @@ function Marksheets() {
                             MarksheetRecords && MarksheetRecords.map((marksheet, index) => {
 
                                 const keys = Object.keys(marksheet);
-                                console.log("Marksheet : ",marksheet)
+                                Logger("Marksheet : ",marksheet)
 
                                 marksheet.marksheetDate = formatDate(marksheet.marksheetDate)
 
@@ -149,7 +152,7 @@ function Marksheets() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         let fieldname = "Marksheet " + data.split("marksheet")[1]
-                                                                        console.log(data, " --> ", marksheet[data])
+                                                                        Logger(data, " --> ", marksheet[data])
                                                                         if (data === "_id" || data === "__v" || data === "attendanceData" || data.toLowerCase() === "marksheetlectures") { }
                                                                         else if (data === "marksheetData") {
                                                                             return (

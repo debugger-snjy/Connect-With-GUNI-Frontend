@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import NoteContext from '../Context/NoteContext';
 import { useNavigate } from 'react-router-dom';
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
 
 export default function AddNote() {
 
     const contextData = useContext(NoteContext);
-    // console.log(contextData);
+    // Logger(contextData);
     // Destructuring Data
     // Here we only need a addNote function
     const { addNote } = contextData;
@@ -18,7 +20,7 @@ export default function AddNote() {
 
     // Changing the Page when user clicks logout button
     useEffect(() => {
-        console.log(sessionStorage.getItem("token"));
+        Logger(sessionStorage.getItem("token"));
         if (!sessionStorage.getItem("token")) {
             navigateTo("/")
         }
@@ -34,12 +36,12 @@ export default function AddNote() {
         // tempNote ==> will convert into permanent note
 
         // Both ways are correct
-        console.log({ tempNote });
+        Logger({ tempNote });
         const responseData = await addNote(tempNote.title, tempNote.description, tempNote.tags);
 
         // Reseting the Form
         document.getElementById("addNoteForm").reset()
-        console.log(responseData);
+        Logger(responseData);
 
         // TODO : A Big Loop Hole Solved
         // IMP : This will clear the tempNote and also will disable the Add Note

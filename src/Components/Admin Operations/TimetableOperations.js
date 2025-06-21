@@ -4,6 +4,8 @@ import NoteContext from '../../Context/NoteContext';
 import InternalMenuBar from '../InternalMenuBar';
 import NavBreadcrumb from '../NavBreadcrumb';
 import TimetableImg from "../../Images/timetableIcon.png"
+// Importing the Logger Function to Log
+import Logger from '../../Utils/Logger';
 
 function TimetableOperations() {
     // Used to navigate things
@@ -68,7 +70,7 @@ function TimetableOperations() {
         // Variable to handle the API Response
         const fetchTimetableResponse = await response.json()
 
-        console.log(fetchTimetableResponse)
+        Logger(fetchTimetableResponse)
 
         if (fetchTimetableResponse.success) {
             // If the response is successful then set the records
@@ -95,12 +97,12 @@ function TimetableOperations() {
         const timetableBatch = document.getElementById("timetableBatch").value;
         const timetableData = formData
 
-        console.log("Data 1 : ", timetableSem)
-        console.log("Data 2 : ", timetableDivision)
-        console.log("Data 3 : ", timetableBatch)
-        console.log("Data 4 : ", timetableData)
+        Logger("Data 1 : ", timetableSem)
+        Logger("Data 2 : ", timetableDivision)
+        Logger("Data 3 : ", timetableBatch)
+        Logger("Data 4 : ", timetableData)
 
-        console.log("Hello This is Add Timetable API")
+        Logger("Hello This is Add Timetable API")
 
         if (timetableSem === "" || timetableDivision === "" || timetableBatch === "" || timetableData === "") {
             contextData.showAlert("Failed", "Some Fields are Empty !", "alert-danger")
@@ -123,7 +125,7 @@ function TimetableOperations() {
             // Variable to handle the API Response
             const addTimetableResponse = await response.json()
 
-            console.log(addTimetableResponse)
+            Logger(addTimetableResponse)
 
             if (addTimetableResponse.success) {
                 // After a successful submission, hide the modal
@@ -154,7 +156,7 @@ function TimetableOperations() {
         // Variable to handle the API Response
         const deleteTimetableResponse = await response.json()
 
-        console.log(deleteTimetableResponse)
+        Logger(deleteTimetableResponse)
 
         if (deleteTimetableResponse.success) {
             // Showing the Alert Message that Timetable Deleted
@@ -182,7 +184,7 @@ function TimetableOperations() {
         // Variable to handle the API Response
         const editTimetableResponse = await response.json()
 
-        console.log(editTimetableResponse)
+        Logger(editTimetableResponse)
 
         if (editTimetableResponse.success) {
             // Showing the Alert Message that Timetable Deleted
@@ -209,7 +211,7 @@ function TimetableOperations() {
             },
         }));
 
-        console.log("My Data : ", formData)
+        Logger("My Data : ", formData)
     };
 
     const handleEditInputChange = (day, interval, field, value) => {
@@ -234,7 +236,7 @@ function TimetableOperations() {
             setEditTimetableData(updatedData)
         }
 
-        console.log("My Edited Data : ", editTimetableData)
+        Logger("My Edited Data : ", editTimetableData)
     };
 
     const applyFilter = () => {
@@ -358,10 +360,10 @@ function TimetableOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        console.log(data, " --> ", timetable[data])
+                                                                        Logger(data, " --> ", timetable[data])
                                                                         if (data === "data") {
                                                                             const days = Object.keys(timetable["data"])
-                                                                            console.log(days)
+                                                                            Logger(days)
 
                                                                             const daysOfWeek = Object.keys(timetable["data"]);
                                                                             const timeIntervals = Array.from(
@@ -471,10 +473,10 @@ function TimetableOperations() {
                                                             <tbody>
                                                                 {
                                                                     keys.map((data, index) => {
-                                                                        console.log(data, " --> ", timetable[data])
+                                                                        Logger(data, " --> ", timetable[data])
                                                                         if (data === "data") {
                                                                             const days = Object.keys(timetable["data"])
-                                                                            console.log(days)
+                                                                            Logger(days)
 
                                                                             const daysOfWeek = Object.keys(timetable["data"]);
                                                                             const timeIntervals = Array.from(
@@ -678,7 +680,7 @@ function TimetableOperations() {
                                                 <input type="text" className="form-control text-black fw-bold" id="timetableBatch" value={editTimetableData.batch || ""} onChange={(e) => handleEditInputChange("", "", 'batch', e.target.value)} required />
                                             </div>
 
-                                            {console.log("New Data is On", editTimetableData)}
+                                            {Logger("New Data is On", editTimetableData)}
 
                                             {editTimetableData.data &&
                                                 Object.keys(editTimetableData.data).map((day) => (
@@ -691,16 +693,16 @@ function TimetableOperations() {
                                                         </div>
                                                         {Object.keys(editTimetableData["data"][day]).map((interval) => (
                                                             <div key={interval}>
-                                                                {console.log("My Data 1 | editTimetableData : ", editTimetableData)}
-                                                                {console.log("My Data 2 | editTimetableData.data : ", editTimetableData.data)}
-                                                                {console.log("My Data 3 | day : ", day)}
-                                                                {console.log("My Data 4 | interval : ", interval)}
-                                                                {console.log("My Data 5 | editTimetableData.data.day : ", editTimetableData["data"][day])}
-                                                                {console.log("My Data 6 | editTimetableData.data.day.interval : ", editTimetableData["data"][day][interval])}
-                                                                {console.log("My Data 7 | editTimetableData.data.day.interval.faculty : ", editTimetableData["data"][day][interval].faculty)}
+                                                                {Logger("My Data 1 | editTimetableData : ", editTimetableData)}
+                                                                {Logger("My Data 2 | editTimetableData.data : ", editTimetableData.data)}
+                                                                {Logger("My Data 3 | day : ", day)}
+                                                                {Logger("My Data 4 | interval : ", interval)}
+                                                                {Logger("My Data 5 | editTimetableData.data.day : ", editTimetableData["data"][day])}
+                                                                {Logger("My Data 6 | editTimetableData.data.day.interval : ", editTimetableData["data"][day][interval])}
+                                                                {Logger("My Data 7 | editTimetableData.data.day.interval.faculty : ", editTimetableData["data"][day][interval].faculty)}
 
                                                                 <div className="row text-center justify-content-evenly align-items-center">
-                                                                    {console.log("Data : ", editTimetableData.data[day][interval].faculty)}
+                                                                    {Logger("Data : ", editTimetableData.data[day][interval].faculty)}
                                                                     <div className="col-2">
                                                                         <div className="mb-3">
                                                                             <label className="form-label" htmlFor={`${day}-${interval}-lec-lab`}>

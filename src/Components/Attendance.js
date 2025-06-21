@@ -3,6 +3,8 @@ import InternalMenuBar from './InternalMenuBar'
 import NavBreadcrumb from './NavBreadcrumb'
 import NoteContext from '../Context/NoteContext';
 import { useLocation } from 'react-router-dom';
+// Importing the Logger Function to Log
+import Logger from '../Utils/Logger';
 
 function Attendance() {
 
@@ -29,7 +31,7 @@ function Attendance() {
         // Variable to handle the API Response
         const userData = await response.json()
 
-        console.log(userData)
+        Logger(userData)
 
         // Sending the response Data
         return userData.data
@@ -38,7 +40,7 @@ function Attendance() {
     useEffect(() => {
         const token = sessionStorage.getItem("token")
         getInfoAPI(token).then((data) => {
-            console.log(data.user.attendanceData)
+            Logger(data.user.attendanceData)
             setuserAttendance(data.user.attendanceData)
         })
 
@@ -64,18 +66,18 @@ function Attendance() {
                         <div className="row gy-4 px-2">
                             {
                                 userAttendance.map((subjectAttendance, index) => {
-                                    console.log(subjectAttendance);
+                                    Logger(subjectAttendance);
                                     let subjectName = Object.keys(subjectAttendance);
-                                    console.log(subjectName);
+                                    Logger(subjectName);
 
                                     // Map and accumulate JSX elements for each subject
                                     let subjectElements = subjectName.map((subject) => {
-                                        console.log(subject);
+                                        Logger(subject);
 
                                         let dates = Object.keys(subjectAttendance[subject]);
-                                        console.log(dates);
+                                        Logger(dates);
                                         let status = Object.values(subjectAttendance[subject]);
-                                        console.log(status);
+                                        Logger(status);
 
                                         // Generate a unique identifier for each subject's accordion
                                         const accordionId = `accordion-${index}-${subject}`;

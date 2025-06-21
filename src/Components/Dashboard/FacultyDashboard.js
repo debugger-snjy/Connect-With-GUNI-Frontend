@@ -23,37 +23,39 @@ import NoteContext from '../../Context/NoteContext'
 import InternalMenuBar from '../InternalMenuBar'
 import NavBreadcrumb from '../NavBreadcrumb'
 
+import Logger from '../../Utils/Logger'
+
 function FacultyDashboard() {
 
     const openUploadMaterials = () => {
-        console.log("This is a Upload Materials");
+        Logger("This is a Upload Materials");
         navigateTo(`${location.pathname}/materials_operations`)
     }
 
     const openUploadAttendance = () => {
-        console.log("This is a Upload Attendance");
+        Logger("This is a Upload Attendance");
         navigateTo(`${location.pathname}/attendance_operations`)
     }
 
     const openTimetableOperations = () => {
-        console.log("This is a Timetable Operations");
+        Logger("This is a Timetable Operations");
         navigateTo(`${location.pathname}/timetable_operations`)
     }
 
     const openRecentAccessed = () => {
-        console.log("This is a Recent Accessed");
+        Logger("This is a Recent Accessed");
         navigateTo(`${location.pathname}/recently_accessed`)
     }
 
     // Function to move the user to remainders page
     const openRemainders = () => {
-        console.log("This is a Remainders Pages")
-        console.log(sessionStorage.getItem("role"))
+        Logger("This is a Remainders Pages")
+        Logger(sessionStorage.getItem("role"))
         navigateTo(`${location.pathname}/remainders`)
     }
 
     const openAnnouncements = () => {
-        console.log("This is a Announcements");
+        Logger("This is a Announcements");
         navigateTo(`${location.pathname}/announcements`)
     }
 
@@ -124,7 +126,7 @@ function FacultyDashboard() {
         // Variable to handle the API Response
         const announcementResponse = await response.json()
 
-        console.log(announcementResponse)
+        Logger(announcementResponse)
 
         if (announcementResponse.success) {
             // If the response is successful then set the notes
@@ -220,7 +222,7 @@ function FacultyDashboard() {
                     {
                         announcements.map((announcement) => {
 
-                            console.log(announcement)
+                            Logger(announcement)
 
                             return (
                                 <div key={announcement._id}>
