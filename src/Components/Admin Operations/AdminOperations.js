@@ -151,7 +151,11 @@ function AdminOperations() {
         Logger(fetchAdminResponse)
 
         if (fetchAdminResponse.success) {
+            // Setting All Admins
             setAdminRecords(fetchAdminResponse.data)
+
+            // Set only those not named Sanjay
+            //setAdminRecords(AdminRecords.filter(item => !item.name.includes("Sanjay Sukhwani Admin")));
         }
     }
 
@@ -212,7 +216,8 @@ function AdminOperations() {
         const updateduserrole = sessionStorage.getItem("role")
         // Logger(updateduserrole)
 
-        if (updatedusername == "" || updateduseremail == "" || updateduserpassword == "" || updatedusergender == "" || updateduserphone == "") {
+        //if (updatedusername == "" || updateduseremail == "" || updateduserpassword == "" || updatedusergender == "" || updateduserphone == "") {
+        if (updatedusername == "" || updateduseremail == "" || updatedusergender == "" || updateduserphone == "") {
             contextData.showAlert("Failed", "Some Fields are Empty !", "alert-danger")
         }
         else {
@@ -372,7 +377,7 @@ function AdminOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         {/* Logger(data, " --> ", admin[data]) */ }
-                                                                        if (data === "_id" || data === "__v") { }
+                                                                        if (data === "_id" || data === "__v" || data==="password") { }
                                                                         else {
                                                                             return (
                                                                                 <tr key={"ModalInfoTable" + index}>
@@ -436,7 +441,7 @@ function AdminOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         {/* Logger(data, " --> ", admin[data]) */ }
-                                                                        if (data === "_id" || data === "__v") { }
+                                                                        if (data === "_id" || data === "__v" || data==="password") { }
                                                                         else {
                                                                             return (
                                                                                 <tr key={"ModalInfoTable" + index}>
@@ -533,7 +538,7 @@ function AdminOperations() {
                                                 <label htmlFor="updateduseremail" className="form-label">Email address</label>
                                                 <input type="email" className="form-control text-black fw-bold" id="updateduseremail" name="email" aria-describedby="emailHelp" onChange={onChange} value={EditAdminRecord.email ?? ""} required />
                                             </div>
-                                            <div className="mb-3">
+                                            <div className="mb-3 d-none">
                                                 <label htmlFor="updateduserpassword" className="form-label">Password</label>
                                                 <input type="password" className="form-control text-black fw-bold" id="updateduserpassword" name="password" onChange={onChange} value={EditAdminRecord.password ?? ""} required />
                                             </div>

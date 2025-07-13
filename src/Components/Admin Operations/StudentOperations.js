@@ -423,7 +423,7 @@ function StudentOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         {/* Logger(data, " --> ", student[data]) */ }
-                                                                        if (data === "_id" || data === "__v" || data === "attendanceData") { }
+                                                                        if (data === "_id" || data === "__v" || data === "attendanceData" || data === "password") { }
                                                                         else {
                                                                             return (
                                                                                 <tr key={"ModalInfoTable" + index}>
@@ -488,7 +488,7 @@ function StudentOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         {/* Logger(data, " --> ", student[data]) */ }
-                                                                        if (data === "_id" || data === "__v" || data === "attendanceData") { }
+                                                                        if (data === "_id" || data === "__v" || data === "attendanceData" || data === "password") { }
                                                                         else {
                                                                             return (
                                                                                 <tr key={"ModalInfoTable" + index}>
@@ -547,7 +547,7 @@ function StudentOperations() {
                                                 <label htmlFor="useremail" className="form-label">Email address</label>
                                                 <input type="email" className="form-control text-black fw-bold" id="useremail" aria-describedby="emailHelp" required />
                                             </div>
-                                            <div className="mb-3">
+                                            <div className="mb-3 d-none">
                                                 <label htmlFor="userpassword" className="form-label">Password</label>
                                                 <input type="password" className="form-control text-black fw-bold" id="userpassword" required />
                                             </div>
@@ -617,7 +617,7 @@ function StudentOperations() {
                                                 <label htmlFor="updateduserdivision" className="form-label">Division</label>
                                                 <input type="text" className="form-control text-black fw-bold" id="updateduserdivision" name="division" aria-describedby="emailHelp" onChange={onChange} value={EditStudentRecord.division} required />
                                             </div>
-                                            <div className="mb-3">
+                                            <div className="mb-3 d-none">
                                                 <label htmlFor="updateduserpassword" className="form-label">Password</label>
                                                 <input type="password" className="form-control text-black fw-bold" id="updateduserpassword" name="password" onChange={onChange} value={EditStudentRecord.password} required />
                                             </div>

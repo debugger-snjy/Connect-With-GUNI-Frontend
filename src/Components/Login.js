@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ganpat_logo from "../Images/Ganpat_LOGO.png";
 import "../CSS/Login.css"
@@ -10,17 +10,27 @@ import Logger from '../Utils/Logger';
 function Login() {
 
     let navigateTo = useNavigate()
+    let isMsgShown = false;
 
     // Using the function to get the data from the context
     const contextData = useContext(NoteContext);
     Logger("Hello Login");
 
+    const [email, setEmail] = useState(process.env.REACT_APP_STUDENT5_EMAIL);
+    const [password, setPassword] = useState(process.env.REACT_APP_STUDENT5_PASS);
+
     useEffect(() => {
+        
+        if (!isMsgShown) {
+            contextData.showAlert("Testing Mode", "Adding Custom Email & Password is Disabled in Test Mode, Kindly Select the User Type : Student, Faculty, Admin", "alert-warning")
+            isMsgShown = true;
+            console.log(isMsgShown);
+        }
         const role = sessionStorage.getItem("role")
         if (sessionStorage.getItem("token")) {
             navigateTo(`/dashboard/${role}`)
         }
-    })
+    }, [])
 
     // Calling the API to get the User Info : 
     const getInfoAPI = async (token) => {
@@ -134,6 +144,32 @@ function Login() {
 
     }
 
+    const updateUserCredentials = (e) => {
+        const role = e.target.value;
+        switch (role) {
+            case "student5":
+                setEmail(process.env.REACT_APP_STUDENT5_EMAIL);
+                setPassword(process.env.REACT_APP_STUDENT5_PASS);
+                break;
+            case "student7":
+                setEmail(process.env.REACT_APP_STUDENT7_EMAIL);
+                setPassword(process.env.REACT_APP_STUDENT7_PASS);
+                break;
+            case "faculty":
+                setEmail(process.env.REACT_APP_FACULTY_EMAIL);
+                setPassword(process.env.REACT_APP_FACULTY_PASS);
+                break;
+            case "admin":
+                setEmail(process.env.REACT_APP_ADMIN_EMAIL);
+                setPassword(process.env.REACT_APP_ADMIN_PASS);
+                break;
+            default:
+                setEmail("");
+                setPassword("");
+        }
+    };
+
+
     return (
         <>
             <div className='loginPage mt-5 mb-5'>
@@ -146,12 +182,15 @@ function Login() {
 
                     <form>
 
-                        <input type="text" className="inputField form-control form-control-md" id="useremail" placeholder="Email" />
-                        <input type="password" className="inputField form-control form-control-md" id="userpassword" placeholder="Password" />
+                        <input type="text" className="inputField form-control form-control-md" disabled={true} id="useremail" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <input type="password" className="inputField form-control form-control-md" disabled={true} id="userpassword" placeholder="Password" value={password} onChange={(e) => setEmail(e.target.value)}
+                        />
 
                         <center>
-                            <select className="form-select inputField" id='userrole' defaultValue={"student"} style={{width : "60%"}}>
-                                <option value="student" defaultChecked>Student</option>
+                            <select className="form-select inputField" id='userrole' defaultValue={"student"} style={{ width: "60%" }} onChange={updateUserCredentials}>
+                                <option value="student5" defaultChecked>Student (Sem5)</option>
+                                <option value="student7">Student (Sem7)</option>
                                 <option value="faculty">Faculty</option>
                                 <option value="admin">Admin</option>
                             </select>

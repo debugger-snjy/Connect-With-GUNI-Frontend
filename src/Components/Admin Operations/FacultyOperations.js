@@ -195,7 +195,8 @@ function FacultyOperations() {
         const updatedfacultygender = document.getElementById("updatedgenderMale").checked ? "male" : document.getElementById("updatedgenderFemale").checked ? "female" : "";
         const userrole = sessionStorage.getItem("role")
 
-        if (updatedfacultyId === "" || updatedfacultydept === "" || updatedfacultydesignation === "" || updatedfacultyShortForm === "" || updatedfacultycabinLocation === "" || updatedfacultyemail === "" || updatedfacultypassword === "" || updatedfacultyname === "" || updatedfacultyphone === "" || updatedfacultygender === "") {
+        //if (updatedfacultyId === "" || updatedfacultydept === "" || updatedfacultydesignation === "" || updatedfacultyShortForm === "" || updatedfacultycabinLocation === "" || updatedfacultyemail === "" || updatedfacultypassword === "" || updatedfacultyname === "" || updatedfacultyphone === "" || updatedfacultygender === "") {
+        if (updatedfacultyId === "" || updatedfacultydept === "" || updatedfacultydesignation === "" || updatedfacultyShortForm === "" || updatedfacultycabinLocation === "" || updatedfacultyemail === "" || updatedfacultyname === "" || updatedfacultyphone === "" || updatedfacultygender === "") {
             contextData.showAlert("Failed", "Some Fields are Empty !", "alert-danger")
         }
         else {
@@ -401,7 +402,7 @@ function FacultyOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         {/* Logger(data, " --> ", faculty[data]) */ }
-                                                                        if (data === "_id" || data === "__v" || data === "attendanceData") { }
+                                                                        if (data === "_id" || data === "__v" || data === "attendanceData" || data == "password") { }
                                                                         else {
                                                                             return (
                                                                                 <tr key={"ModalInfoTable" + index}>
@@ -466,7 +467,7 @@ function FacultyOperations() {
                                                                 {
                                                                     keys.map((data, index) => {
                                                                         {/* Logger(data, " --> ", faculty[data]) */ }
-                                                                        if (data === "_id" || data === "__v" || data === "attendanceData") { }
+                                                                        if (data === "_id" || data === "__v" || data === "attendanceData" || data === "password") { }
                                                                         else {
                                                                             return (
                                                                                 <tr key={"ModalInfoTable" + index}>
@@ -534,7 +535,7 @@ function FacultyOperations() {
                                                 <label htmlFor="facultyemail" className="form-label">Email address</label>
                                                 <input type="email" className="form-control text-black fw-bold" id="facultyemail" required />
                                             </div>
-                                            <div className="mb-3">
+                                            <div className="mb-3 d-none">
                                                 <label htmlFor="facultypassword" className="form-label">Password</label>
                                                 <input type="password" className="form-control text-black fw-bold" id="facultypassword" required />
                                             </div>
@@ -613,7 +614,7 @@ function FacultyOperations() {
                                                 <label htmlFor="updatedfacultyemail" className="form-label">Email address</label>
                                                 <input type="email" className="form-control text-black fw-bold" id="updatedfacultyemail" name="email" onChange={onChange} value={EditFacultyRecord.email} required />
                                             </div>
-                                            <div className="mb-3">
+                                            <div className="mb-3 d-none">
                                                 <label htmlFor="updatedfacultypassword" className="form-label">Password</label>
                                                 <input type="password" className="form-control text-black fw-bold" id="updatedfacultypassword" name="password" onChange={onChange} value={EditFacultyRecord.password} required />
                                             </div>

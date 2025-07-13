@@ -123,6 +123,29 @@ function ViewProfile() {
 
                                 if (field == "__v" || field == "_id" || field == "attendanceData") {
                                 }
+                                else if (field === "date") {
+                                    const dateStr = "Wed Nov 01 2023 08:47:51 GMT+0000 (Coordinated Universal Time)";
+                                    const date = new Date(dateStr);
+
+                                    // Format to: Wed Nov 01 2023 08:47:51 PM
+                                    const formattedDate = date.toLocaleString('en-US', {
+                                        weekday: 'short',
+                                        month: 'short',
+                                        day: '2-digit',
+                                        year: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        second: '2-digit',
+                                        hour12: true,
+                                        timeZone: 'UTC' // optional: use your desired timezone
+                                    });
+                                    return (
+                                        <tr scope="row" key={index}>
+                                            <th className='w-45 p-4 fs-5' style={{ textAlign: "right" }}>{fieldname[0].toUpperCase() + fieldname.slice(1).toLowerCase()}</th>
+                                            <th className='w-55 p-4 fs-5' style={{ textAlign: "left" }}>{formattedDate.replace(/,/g, '')}</th>
+                                        </tr>
+                                    )
+                                }
                                 else {
                                     return (
                                         <tr scope="row" key={index}>
