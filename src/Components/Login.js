@@ -94,6 +94,11 @@ function Login() {
         let userrole = document.getElementById("userrole").value;
         Logger(userrole)
 
+        // Sending the Role as Student for the Student of Sem 5 & Sem 7
+        if(userrole=="student5" || userrole=="student7)
+        {
+            userrole = "student";
+        }            
 
         // Adding the API Call to add the notes into the Database
         const response = await loginAPI(useremail, userpassword, userrole)
