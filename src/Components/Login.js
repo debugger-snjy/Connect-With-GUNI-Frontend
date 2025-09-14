@@ -95,7 +95,7 @@ function Login() {
         Logger(userrole)
 
         // Sending the Role as Student for the Student of Sem 5 & Sem 7
-        if(userrole=="student5" || userrole=="student7)
+        if(userrole=="student5" || userrole=="student7")
         {
             userrole = "student";
         }            
